@@ -15,6 +15,42 @@ class Horario extends Conexion
     private $tipoculto_id;
     private $fecha;
     private $capilla_id;
+    private $padre_dni;
+    private $cantor_dni;
+
+    /**
+     * @return mixed
+     */
+    public function getPadreDni()
+    {
+        return $this->padre_dni;
+    }
+
+    /**
+     * @param mixed $padre_dni
+     */
+    public function setPadreDni($padre_dni)
+    {
+        $this->padre_dni = $padre_dni;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCantorDni()
+    {
+        return $this->cantor_dni;
+    }
+
+    /**
+     * @param mixed $cantor_dni
+     */
+    public function setCantorDni($cantor_dni)
+    {
+        $this->cantor_dni = $cantor_dni;
+    }
+
+
 
     /**
      * @return mixed
@@ -411,6 +447,32 @@ class Horario extends Conexion
 
     }
 
+
+
+
+    public function update_padre_cantor()
+    {
+        $this->dbLink->beginTransaction();
+        try {
+
+
+            $sql = "update horario set padre_dni = :p_padre_dni , cantor_dni = :p_cantor_dni where id = :p_id ";
+            $sentencia = $this->dbLink->prepare($sql);
+            $sentencia->bindParam(":p_padre_dni", $this->padre_dni);
+            $sentencia->bindParam(":p_cantor_dni", $this->cantor_dni);
+            $sentencia->bindParam(":p_id", $this->id);
+            $sentencia->execute();
+
+            $this->dbLink->commit();
+            return true;
+
+        } catch (Exception $exc) {
+            //Abortamos la transaccion
+            $this->dbLink->rollBack();
+            //Lanzar el error hacia la siguiente capa (controlador)
+            throw $exc;
+        }
+    }
 
 
 

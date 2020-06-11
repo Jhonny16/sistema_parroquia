@@ -218,8 +218,8 @@ class reserva extends Conexion
             $numeracion = "RESERVA-" . $correlativo;
 
             $sql = "
-                    INSERT INTO reserva (code, estado, ofrece, total, cliente_dni, padre_id, cantor_id, horario_id,detail_comunitaria) 
-                    VALUES (:p_code, :p_estado, :p_ofrece, :p_total, :p_cliente_dni, :p_padre_id, :p_cantor_id, :p_horario_id, :p_detail);
+                    INSERT INTO reserva (code, estado, ofrece, total, cliente_dni, horario_id) 
+                    VALUES (:p_code, :p_estado, :p_ofrece, :p_total, :p_cliente_dni, :p_horario_id);
                         ";
             $sentencia = $this->dbLink->prepare($sql);
             $sentencia->bindParam(":p_code", $numeracion);
@@ -228,9 +228,6 @@ class reserva extends Conexion
             $sentencia->bindParam(":p_total", $this->total);
             $sentencia->bindParam(":p_cliente_dni", $this->cliente_dni);
             $sentencia->bindParam(":p_padre_id", $this->padre_id);
-            $sentencia->bindParam(":p_cantor_id", $this->cantor_id);
-            $sentencia->bindParam(":p_horario_id", $this->horario_id);
-            $sentencia->bindParam(":p_detail", $this->detail);
             $sentencia->execute();
             //SELECT int_id FROM intencion order by 1 desc limit 1
 
@@ -245,10 +242,11 @@ class reserva extends Conexion
 
                 foreach ($datosDetalle as $key => $value) {
                     $sql = "insert into 
-                        detalle_reserva (dirigido, importe, reserva_id) values(:p_dirigido, :p_importe,:p_reserva_id)";
+                        detalle_reserva (dirigido, importe, reserva_id, tipoculto_detalle) values(:p_dirigido, :p_importe,:p_reserva_id, :p_detalle)";
                     $sentencia = $this->dbLink->prepare($sql);
                     $sentencia->bindParam(":p_dirigido", $value->dirigido);
                     $sentencia->bindParam(":p_importe", $value->importe);
+                    $sentencia->bindParam(":p_detalle", $value->detalle);
                     $sentencia->bindParam(":p_reserva_id", $reserva_id);
                     $sentencia->execute();
                 }
@@ -326,25 +324,29 @@ class reserva extends Conexion
         try {
             $sql = "
                select
-                       h.id,
-                       h.fecha,
-                       hp.hora_hora as hora,
-                       tc.tc_id as tipoculto_id,
-                       tc.tc_tiempo_maximo as dias,
-                       tc.tc_nombre as tipoculto_nombre,
-                       (case when tc.tc_tipo = 'I' then 'Individual' else 'Comunitaio'end) as tipoculto_type,
-                      'Limosna: '||(select limosna from lista_precio where capilla_id = c.cap_id and tipo_culto_id = tc.tc_id ) || ' / ' ||
-                      'Templo: ' || (select templo from lista_precio where capilla_id = c.cap_id and tipo_culto_id = tc.tc_id ) || ' / ' ||
-                      'Cantor: '|| (select cantor from lista_precio where capilla_id = c.cap_id and tipo_culto_id = tc.tc_id ) as precio_detalle,
-                       (select precio from lista_precio where capilla_id = c.cap_id and tipo_culto_id = tc.tc_id ) as precio_normal,
-                       c.cap_id as capilla_id,
-                       c.cap_nombre,
-                       (case
+                      h.id,
+                      h.fecha,
+                      hp.hora_hora as hora,
+                      tc.tc_id as tipoculto_id,
+                      tc.tc_tiempo_maximo as dias,
+                      tc.tc_nombre as tipoculto_nombre,
+                      (case when tc.tc_tipo = 'I' then 'Individual' else 'Comunitario'end) as tipoculto_type,
+                      coalesce('Limosna: '||(select limosna from lista_precio where capilla_id = c.cap_id and tipo_culto_id = tc.tc_id
+                                                                       and (h.fecha between fecha_inicio and fecha_fin) order by 1 desc limit 1) || ' / ' ||
+                      'Templo: ' || (select templo from lista_precio where capilla_id = c.cap_id and tipo_culto_id = tc.tc_id
+                                                                       and (h.fecha between fecha_inicio and fecha_fin) order by 1 desc limit 1) || ' / ' ||
+                      'Cantor: '|| (select cantor from lista_precio where capilla_id = c.cap_id and tipo_culto_id = tc.tc_id
+                                                                      and (h.fecha between fecha_inicio and fecha_fin) order by 1 desc limit 1),'-') as precio_detalle,
+                      coalesce((select precio from lista_precio where capilla_id = c.cap_id and tipo_culto_id = tc.tc_id
+                                                         and (h.fecha between fecha_inicio and fecha_fin) order by 1 desc limit 1),0) as precio_normal,
+                      c.cap_id as capilla_id,
+                      c.cap_nombre,
+                      (case
                          when (tc.tc_tipo = 'I' and (select count(id) from reserva where horario_id = h.id) = 0) then 'Disponible'
                          when tc.tc_tipo = 'C' then 'Disponible'
                          else 'No disponible'
-                          end) as disponibilidad,
-                       coalesce((select count(id) from reserva where horario_id = h.id),0) as numero_reservas
+                        end) as disponibilidad,
+                      coalesce((select count(id) from reserva where horario_id = h.id),0) as numero_reservas
                 from
                 horario h inner join capilla c on h.capilla_id = c.cap_id
                   inner join parroquia p on c.par_id = p.par_id
@@ -399,28 +401,41 @@ class reserva extends Conexion
     {
         try {
             $sql = "
-              select
-                r.id,
+              select  
+              c.cap_id as capilla_id,
+                       r.id,
                        r.code,
+                       r.fecha as fecha_reserva,
                        h.fecha ||' / '||hp.hora_hora as horario,
                        r.estado,
                        r.ofrece,
+                       tc.tc_nombre,
+                      (case when tc.tc_tipo = 'I' then 'Individual' else 'Comunitario'end) as tipoculto_type,
                        cli.per_apellido_paterno ||' '|| cli.per_apellido_materno ||' '|| cli.per_nombre as cliente,
-                       padre.per_apellido_paterno ||' '|| padre.per_apellido_materno ||' '|| padre.per_nombre as padre,
-                       cantor.per_apellido_paterno ||' '|| cantor.per_apellido_materno ||' '|| cantor.per_nombre as cantor,
+                       padre.per_iddni as padre_dni,
+                       cantor.per_iddni as cantor_dni,
+                       coalesce(padre.per_apellido_paterno ||' '|| padre.per_apellido_materno ||' '|| padre.per_nombre, '-') as padre,
+                       coalesce(cantor.per_apellido_paterno ||' '|| cantor.per_apellido_materno ||' '|| cantor.per_nombre,'-') as nombre_cantor,
                        r.total,
-                       r.detail_comunitaria,
                        dr.dirigido,
                        dr.importe,
+                       dr.tipoculto_detalle,
                        coalesce(p.code, '-') as pago_code,
-                       p.fecha
+                       p.fecha as fecha_pago,
+                       (select limosna from lista_precio where capilla_id = c.cap_id and tipo_culto_id = tc.tc_id
+                                                                       and (h.fecha between fecha_inicio and fecha_fin) order by 1 desc limit 1) as limosna,  
+                       (select templo from lista_precio where capilla_id = c.cap_id and tipo_culto_id = tc.tc_id
+                                                                       and (h.fecha between fecha_inicio and fecha_fin) order by 1 desc limit 1) as templo,
+                       (select cantor from lista_precio where capilla_id = c.cap_id and tipo_culto_id = tc.tc_id
+                                                                       and (h.fecha between fecha_inicio and fecha_fin) order by 1 desc limit 1) as cantor
                 from reserva r inner join horario h on r.horario_id = h.id
                 inner join persona cli on r.cliente_dni = cli.per_iddni
-                inner join persona padre on r.padre_id = padre.per_iddni
-                inner join persona cantor on r.cantor_id = cantor.per_iddni
+                left join persona padre on h.padre_dni = padre.per_iddni
+                left join persona cantor on h.cantor_dni = cantor.per_iddni
                 inner join detalle_reserva dr on r.id = dr.reserva_id
                 inner join horario_patron hp on h.hora_id = hp.hora_id
                 inner join tipo_culto tc on h.tipoculto_id = tc.tc_id
+                inner join capilla c on h.capilla_id = c.cap_id
                 left join pago p on r.id = p.reserva_id
                 where 
                   (case when :p_reserva_id = 0 then true else r.id = :p_reserva_id end)
@@ -503,5 +518,7 @@ class reserva extends Conexion
 
 
     }
+
+
 
 }

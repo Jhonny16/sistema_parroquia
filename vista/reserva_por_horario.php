@@ -78,6 +78,11 @@
                         <div class="box box-default">
                             <div class="box-header">
                                 <span style="color: #01a189">Resulados de la búsqueda:</span>
+                                <button type="button" class="btn btn-info pull-right" id="btn_update_padre_cantor"
+                                        data-toggle="modal" data-target="#mdl_padre_cantor"
+                                title="Asignación de padre y cantor"><i class="fa fa-odnoklassniki">
+
+                                    </i> Asignar</button>
 
                             </div>
                             <div class="box-body">
@@ -105,37 +110,40 @@
                                         <!-- info row -->
                                         <div class="row invoice-info">
                                             <div class="col-sm-4 invoice-col">
-                                                Cliente
+                                                Cliente:
                                                 <address>
                                                     <strong><span id="fr_cliente"></span></strong><br>
-                                                    Ofrece(n): <span id="fr_ofrece"></span><br>
-                                                    Horario: <span id="fr_horario"></span><br>
+                                                    Tipo de culto : <span id="fr_tipoculto"></span><br>
                                                 </address>
                                             </div>
                                             <!-- /.col -->
                                             <div class="col-sm-4 invoice-col">
-                                                Padre
+                                                Ofrece(n):
                                                 <address>
-                                                    <strong> <span id="fr_padre"></span></strong><br>
-                                                    Cantor: <span id="fr_cantor"></span><br>
-                                                    Tipo comunitaria: <span id="fr_detail"></span><br>
+                                                    <strong> <span id="fr_ofrece"></span></strong><br>
+                                                Horario: <span id="fr_horario"></span><br>
                                                 </address>
+
+
                                             </div>
                                             <!-- /.col -->
                                             <div class="col-sm-4 invoice-col">
-                                                <b><span id="fr_codigoreserva"></span></b><br>
-                                                <b>Estado:</b> <span id="fr_estado"></span><br>
+                                                <b># <span id="fr_codigoreserva"></span></b><br>
+                                                Estado: <span id="fr_estado"></span><br>
+                                                Fecha reserva: <span id="fr_fecha_hora"></span><br>
+
 
                                             </div>
                                             <!-- /.col -->
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-xs-12 table-responsive">
+                                            <div class="col-xs-6 table-responsive">
                                                 <table class="table table-striped">
                                                     <thead>
                                                     <tr>
                                                         <th>#</th>
+                                                        <th id="fr_detalle_detalle">Detalle</th>
                                                         <th>Intención</th>
                                                         <th>Importe</th>
                                                     </tr>
@@ -144,6 +152,27 @@
 
                                                     </tbody>
                                                 </table>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <tr>
+                                                            <th style="width:50%">Limosna:</th>
+                                                            <td style="text-align: right">s/. <span id="fr_limosna"</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Templo</th>
+                                                            <td style="text-align: right">s/. <span id="fr_templo" ></span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Cantor</th>
+                                                            <td style="text-align: right">s/. <span id="fr_cantor" ></span></td>
+                                                        </tr>   <tr>
+                                                            <th>Total:</th>
+                                                            <td style="text-align: right">s/. <span id="fr_total" ></span></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
                                             </div>
                                             <!-- /.col -->
                                         </div>
@@ -161,26 +190,32 @@
                                                     a la cuenta bancaria BCP : 010022525822
                                                 </p>
                                             </div>
-                                            <div class="col-xs-6">
-                                                <p class="lead"></p>
 
-                                                <div class="table-responsive">
-                                                    <table class="table">
-                                                        <tr>
-                                                            <th style="width:50%">Subtotal:</th>
-                                                            <td>s/. <span id="fr_subtotal"></span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Impuesto(18%)</th>
-                                                            <td>s/. <span id="fr_impuesto">0.00</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Total:</th>
-                                                            <td>s/. <span id="fr_total"></span></td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
+                                            <div class="col-xs-6 table-responsive">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Recordamos:</th>
+                                                        <th></th>
+                                                        <th></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>1. La Santa Misa es la renovación del Sacrificio de Cristo en la Cruz. Tiene un valor
+                                                            espiritual infinito. Lo que por su celebración es una limosna no un pago</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2. Es conveniente participantes en la Comunión Eucarística. Confiesa con anticipación.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3. No traer imágenes o cuadros de Santos a la Iglesia.</td>
+                                                    </tr>
+
+                                                    </tbody>
+                                                </table>
                                             </div>
+
                                         </div>
 
                                         <div class="row no-print">
@@ -201,6 +236,7 @@
                     </div>
                 </div>
             </small>
+            <?php require_once 'modal_cambiar_padre_cantor.php'; ?>
         </section>
     </div>
 

@@ -1,13 +1,15 @@
 var fecha = null;
 var list_horarios_reservas = [];
 var horario_seleccionado = null;
+var number_reservas = 0;
+
 $(document).ready(function () {
-    $('#calendario').datepicker().on("changeDate", function (e) {
+
+    $('#calendario').datepicker({locale: 'es'}).on("changeDate", function (e) {
         console.log(e.format(0, "yyyy-mm-dd"));
         fecha = e.format(0, "yyyy-mm-dd");
         lista();
     });
-
     cargarCapillaId("#combo_capilla_id");
     cargarTipoCultoId("#combo_tipoculto_id");
     cargarClienteId("#combo_cliente_id");
@@ -93,67 +95,6 @@ function cargarClienteId(p_nombreCombo) {
     });
 }
 
-$("#combo_capilla_id").change(function () {
-    cargarPadreId("#combo_padre_id");
-    cargarCantorId("#combo_cantor_id");
-});
-
-function cargarPadreId(p_nombreCombo) {
-    var data = {
-        'capilla': $("#combo_capilla_id").val()
-    };
-    $.post
-    (
-        "../controlador/persona_padres_listar_controlador.php", data
-    ).done(function (resultado) {
-        var datosJSON = resultado;
-
-        if (datosJSON.estado === 200) {
-            var html = "";
-            html += '<option value="">Seleccione Padre</option>';
-            $.each(datosJSON.datos, function (i, item) { //each para recorrer todos los elementos de array
-
-                html += '<option value="' + item.per_iddni + '">' + item.padre + '</option>';
-            });
-            $(p_nombreCombo).html(html);
-        } else {
-            swal("Mensaje del sistema", resultado, "warning");
-        }
-    }).fail(function (error) {
-        var datosJSON = $.parseJSON(error.responseText);
-        swal("Error", datosJSON.mensaje, "error");
-    });
-}
-
-function cargarCantorId(p_nombreCombo) {
-    var data = {
-        'capilla': $("#combo_capilla_id").val()
-    };
-    $.post
-    (
-        "../controlador/persona_cantores_listar_controlador.php", data
-    ).done(function (resultado) {
-        console.log("cantor");
-        console.log(resultado);
-        var datosJSON = resultado;
-
-        if (datosJSON.estado === 200) {
-            var html = "";
-            html += '<option value="">Seleccione Cantor</option>';
-            $.each(datosJSON.datos, function (i, item) { //each para recorrer todos los elementos de array
-
-                html += '<option value="' + item.per_iddni + '">' + item.cantor + '</option>';
-            });
-            $(p_nombreCombo).html(html);
-        } else {
-            swal("Mensaje del sistema", resultado, "warning");
-        }
-    }).fail(function (error) {
-        var datosJSON = $.parseJSON(error.responseText);
-        swal("Error", datosJSON.mensaje, "error");
-    });
-}
-
 
 $('#aprobacion').on('ifChecked', function (event) {
     $("#precio").removeAttr('disabled');
@@ -208,7 +149,9 @@ function lista() {
                     html += '<tr>';
                     if (item.disponibilidad == 'Disponible') {
                         html += '<td style="text-align: center">';
-                        html += '<input type="radio" name="radio_reserva_id" class="flat-red" onclick="horario_selection(' + item.id + ')">';
+                        // html += '<input type="radio" name="radio_reserva_id" class="flat-red" onclick="horario_selection(' + item.id + ')">';
+                        html += '<button type="button" class="btn btn-block btn-info btn-xs" onclick="horario_selection(' + item.id + ')"' +
+                            '><i class="fa fa-check-circle"></i> Reservar</button>'
                         html += '</td>';
                     } else {
                         html += '<td style="text-align: center">-</td>';
@@ -228,6 +171,8 @@ function lista() {
                     html += '<td>' + item.precio_normal + '</td>';
                     html += '<td>' + item.cap_nombre + '</td>';
                     html += '<td style="text-align: center">' + item.numero_reservas + '</td>';
+
+                    number_reservas = item.numero_reservas;
                     if (item.disponibilidad == 'No Disponible' && item.tipoculto_type == 'Individual') {
                         html += '<td style="text-align: center"><i class="fa fa-eye text-info" title="Lista de reservas"></i></td>';
                     } else {
@@ -259,7 +204,7 @@ function lista() {
                 });
 
             } else {
-                $("#list_reservas").html("");
+                $("#reserva_lista").empty();
                 swal("Nota", datosJSON.mensaje, "warning");
             }
 
@@ -276,11 +221,19 @@ function lista() {
 var ide = 0;
 
 function horario_selection(id) {
+    limpiar_modal_reserva();
+
     for (var i = 0; i < list_horarios_reservas.length; i++) {
         if (id == list_horarios_reservas[i].id) {
 
             if (list_horarios_reservas[i].precio_normal == null) {
                 swal("Aviso!", "Este tipo de culto no tiene precio definido", "warning");
+                return 0;
+                break;
+            }
+
+            if (list_horarios_reservas[i].precio_normal == 0) {
+                swal("Aviso!", "Este tipo de culto no tiene precio definido. Por favor revise la lista de precios.", "warning");
                 return 0;
                 break;
             }
@@ -315,15 +268,19 @@ function horario_reservar() {
         $("#combo_capilla_id").val(horario_seleccionado.capilla_id);
 
         //Se activaran para selccionar los combos para padre y cantor
-        cargarPadreId("#combo_padre_id");
-        cargarCantorId("#combo_cantor_id");
+
+        // if (number_reservas > 0){
+        //     $("#combo_padre_id").attr('disabled');
+        //     $("#combo_cantor_id").attr('disabled');
+        // }
 
         $("#ofrece").removeAttr('disabled');
         $("#combo_tipoculto_id").val(horario_seleccionado.tipoculto_id);
-        $("#combo_padre_id").removeAttr('disabled');
         $("#fecha_ref").val(horario_seleccionado.fecha);
         $("#hora_ref").val(horario_seleccionado.hora);
         $("#precio").val(horario_seleccionado.precio_normal);
+
+        cargarComboDetail(horario_seleccionado.tipoculto_id);
 
 
     }
@@ -347,7 +304,24 @@ function comparar_fecha(dias, fecha, id) {
 
         if (datosJSON.estado === 200) {
             $("#btn_reservar_calendar_add").removeAttr('style');
-            swal("Bien!", resultado.mensaje, "info");
+
+            swal({
+                    title: "Genial",
+                    text: resultado.mensaje,
+                    confirmButtonColor: '#3d9205',
+                    confirmButtonText: 'OK',
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+
+                        $("#btn_reservar_calendar").click();
+
+                    }
+                });
+
+
         } else {
             if (datosJSON.estado === 203) {
                 $("#btn_reservar_calendar_add").removeAttr('style');
@@ -368,6 +342,7 @@ function plus_add() {
     console.log(horario_seleccionado.tipoculto_type);
 
     var dirigido = $("#dirigido").val();
+    var detalle = $("#combo_detail").val();
     var costo = $("#precio").val();
     console.log(dirigido);
     if ($("#dirigido").val() == "") {
@@ -378,8 +353,13 @@ function plus_add() {
     var fila = "<tr>" +
         "<td align=\"center\" id=\"celiminar\"><a href=\"javascript:void();\"><i class=\"fa fa-trash text-orange\"></i></a></td>" +
         "<td>" + dirigido + "</td>" +
-        "<td style=\"text-align: right\">" + costo + "</td>" +
-        "</tr>";
+        "<td>" + detalle + "</td>";
+    if (horario_seleccionado.tipoculto_type == 'Individual') {
+        fila += "<td style=\"text-align: right\">-</td>";
+    } else {
+        fila +="<td style=\"text-align: right\">" + costo + "</td>";
+    }
+    fila += "</tr>";
 
     var cont = 0
     $("#detalle tr").each(function () {
@@ -392,10 +372,15 @@ function plus_add() {
         $("#dirigido").val("");
         return 0;
     } else {
+        // if (horario_seleccionado.tipoculto_type == 'Individual'){
+        //
+        // }else{
+        //     $("#precio").val("0");
+        //
+        // }
         $("#detalle").append(fila);
-        $("#precio").val("0");
         $("#dirigido").val("");
-        calcularTotales();
+        calcularTotales(horario_seleccionado.tipoculto_type);
     }
 
 
@@ -403,7 +388,7 @@ function plus_add() {
 
 
 $(document).on("click", "#celiminar", function () {
-    if (!confirm("Esta seguro de elimina el registro seleccionado")) {
+    if (!confirm("Esta seguro de eliminar el registro seleccionado")) {
         return 0;
     }
     var fila = $(this).parents().get(0); //capturar la fila que deseamos eliminar
@@ -412,13 +397,22 @@ $(document).on("click", "#celiminar", function () {
 });
 
 
-function calcularTotales() {
+function calcularTotales(type) {
     var importeNeto = 0;
-    $("#detalle tr").each(function () {
-        var importe = $(this).find("td").eq(2).html();
-        importeNeto = importeNeto + parseFloat(importe);
-    });
-    $("#total").html(importeNeto.toFixed(2));
+
+    if (type == 'Individual') {
+
+        importeNeto = importeNeto + parseFloat($("#precio").val());
+
+        $("#total").html(importeNeto.toFixed(2));
+    } else {
+        $("#detalle tr").each(function () {
+            var importe = $(this).find("td").eq(3).html();
+            importeNeto = importeNeto + parseFloat(importe);
+        });
+        $("#total").html(importeNeto.toFixed(2));
+    }
+
 }
 
 
@@ -428,7 +422,7 @@ function create_reserva() {
 
     swal({
             title: "Confirme",
-            text: "¿Esta seguro de guarda la reserva?",
+            text: "¿Esta seguro de guardar la reserva?",
             showCancelButton: true,
             confirmButtonColor: '#3d9205',
             confirmButtonText: 'Si',
@@ -442,12 +436,14 @@ function create_reserva() {
                 arrayDetalle.splice(0, arrayDetalle.length);
                 $("#detalle tr").each(function () {
                     var dirigido = $(this).find("td").eq(1).html();
-                    var importe = $(this).find("td").eq(2).html();
+                    var detalle = $(this).find("td").eq(2).html();
+                    var importe = $(this).find("td").eq(3).html();
 
                     var objDetalle = new Object();
 
                     objDetalle.dirigido = dirigido;
                     objDetalle.importe = importe;
+                    objDetalle.detalle = detalle;
                     arrayDetalle.push(objDetalle);
 
                 });
@@ -455,13 +451,10 @@ function create_reserva() {
                 var datos_frm = {
                     estado: $("#combo_estado").val(),
                     ofrece: $("#ofrece").val(),
-                    detail: $("#combo_detail").val(),
                     total: $("#total").html(),
                     cliente_dni: $("#combo_cliente_id").val(),
-                    padre_id: $("#combo_padre_id").val(),
-                    cantor_id: $("#combo_cantor_id").val(),
                     horario_id: $("#horario_id").val(),
-                    detalle: jsonDetalle,
+                    detalle: jsonDetalle
 
                 };
                 console.log(datos_frm);
@@ -483,6 +476,7 @@ function create_reserva() {
                             },
                             function (isConfirm) {
                                 if (isConfirm) {
+                                    window.location.href = '../vista/reserva_calendar.php';
                                     //cliente_sms(resultado.datos);
                                 }
                             });
@@ -538,5 +532,58 @@ function cliente_sms(id) {
         var datosJSON = $.parseJSON(error.responseText);
         swal("Ocurrió un error", datosJSON.mensaje, "error");
     });
+
+}
+
+function cargarComboDetail(tipoculto_id) {
+
+    var data = {'tipoculto_id': tipoculto_id};
+
+    console.log(data);
+    $.post
+    (
+        "../controlador/tipoculto_detail_list.php", data
+    ).done(function (resultado) {
+        console.log(resultado);
+
+        var datosJSON = resultado;
+
+        if (datosJSON.estado === 200) {
+            $("#combo_detail").empty();
+
+            var html = "";
+
+            html += '<option value="0">Seleccione detalle</option>';
+            $.each(datosJSON.datos, function (i, item) {
+                html += '<option value="' + item.det_nombre + '">' + item.det_nombre + ' / ' + item.det_descripcion + '</option>';
+            });
+            $("#combo_detail").html(html);
+        } else {
+            swal("Mensaje del sistema", resultado, "warning");
+        }
+    }).fail(function (error) {
+        var datosJSON = $.parseJSON(error.responseText);
+        swal("Error", datosJSON.mensaje, "error");
+    });
+}
+
+function limpiar_modal_reserva(){
+    $("#title_reserva_calendar").empty();
+    $("#horario_id").val("");
+    $("#combo_capilla_id").val("0");
+    $("#fecha_ref").val("");
+    $("#hora_ref").val("");
+    $("#combo_cliente_id").val("0");
+    $("#combo_tipoculto_id").val("0");
+    $("#combo_detail").val("0");
+    $("#aprobacion").iCheck('uncheck');
+    $("#precio").removeAttr('disabled');
+    $("#precio").attr('disabled','disabled');
+    $("#precio").val("0");
+    $("#dirigido").val("");
+    $("#detalle").empty();
+    $("#ofrece").val("");
+
+
 
 }

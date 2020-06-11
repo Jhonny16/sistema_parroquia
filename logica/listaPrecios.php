@@ -182,7 +182,8 @@ class listaPrecios extends Conexion
                            lp.fecha_inicio || ' / ' || lp.fecha_fin as fechas,
                            p.par_nombre || ' / '|| c.cap_nombre as parroquia_capilla,
                            tc.tc_nombre as tipo_culto,
-                          (case when current_date between lp.fecha_inicio and lp.fecha_fin then 'Vigente' else 'Expiró vigencia' end) as vigencia
+                          --(case when current_date between lp.fecha_inicio and lp.fecha_fin then 'Vigente' else 'Expiró vigencia' end) as vigencia
+                          (case when current_date < lp.fecha_fin then 'Vigente' else 'Expiró vigencia' end) as vigencia
                     from lista_precio lp inner join capilla c on lp.capilla_id = c.cap_id
                     inner join tipo_culto tc on lp.tipo_culto_id = tc.tc_id
                     inner join parroquia p on c.par_id = p.par_id

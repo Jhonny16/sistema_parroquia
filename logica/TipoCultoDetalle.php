@@ -104,6 +104,21 @@ class TipoCultoDetalle extends Conexion
         }
     }
 
+    public function listar_por_tipoculto($tipoculto_id)
+    {
+        try {
+            $sql = "
+              select * from det_culto where tc_id = :p_tipoculto_id  ";
+            $sentencia = $this->dbLink->prepare("$sql");
+            $sentencia->bindParam(":p_tipoculto_id", $tipoculto_id);
+            $sentencia->execute();
+            $resultado = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            return $resultado;
+        } catch (Exception $exc) {
+            throw $exc;
+        }
+    }
+
     public function agregar()
     {
 

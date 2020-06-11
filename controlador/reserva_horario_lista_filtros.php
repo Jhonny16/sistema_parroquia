@@ -20,7 +20,7 @@ try {
         Funciones::imprimeJSON(200, "", $resultado);
 
     }else{
-        Funciones::imprimeJSON(203, "", $resultado);
+        Funciones::imprimeJSON(203, "No hay reservas registradas", $resultado);
 
     }
 

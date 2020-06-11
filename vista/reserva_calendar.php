@@ -22,12 +22,13 @@
 
         <section class="content">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
+
                     <div class="box box-solid bg-green-gradient">
                         <div class="box-header">
                             <i class="fa fa-calendar"></i>
 
-                            <h3 class="box-title">Calendar</h3>
+                            <h3 class="box-title">Calendario</h3>
                             <!-- tools box -->
                             <div class="pull-right box-tools">
                                 <!-- button with a dropdown -->
@@ -54,7 +55,7 @@
                         <div class="box-header with-border">
                             <span style="color: #01a189">Resultados de la búsqueda:</span>
                             <a type="button" class="btn btn-info pull-right"
-                               id="btn_reservar_calendar_add" style="display: none"
+                               id="btn_reservar_calendar" style="display: none"
                                onclick="horario_reservar();"><i
                                         class="fa fa-check-circle"></i>
                                 <strong>Reservar</strong></a>

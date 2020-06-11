@@ -33,22 +33,22 @@ class Help
                                     </head>
                                 </table> 
                                 <hr style="color: #0056b2;" />
-                                <table style="width: 100%">
-                                    <body>
-                                    <tr>
-                                    <td>Capilla: </td><td>' . $capilla . '</td>
-                                    </tr>
-                                    <tr>
-                                    <td>Fecha: </td><td>Chiclayo,&nbsp;' . date("d") . ' de ' . date(" M ") . '  del ' . date(" Y ") . '</td>
-                                    </tr>
-                                    <tr>
-                                    <td>Hora: </td><td>' . date('H:i:s') . '</td>
-                                    </tr>
-                                      <tr>
-                                    <td>Usuario : </td><td>' . $usuario . '</td>
-                                    </tr>
-                                    </body>
-                                </table>
+                                    <table style="width: 100%">
+                                        <body>
+                                        <tr>
+                                        <td>Capilla: </td><td>' . $capilla . '</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Fecha: </td><td>Chiclayo,&nbsp;' . date("d") . ' de ' . date(" M ") . '  del ' . date(" Y ") . '</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Hora: </td><td>' . date('H:i:s') . '</td>
+                                        </tr>
+                                          <tr>
+                                        <td>Usuario : </td><td>' . $usuario . '</td>
+                                        </tr>
+                                        </body>
+                                    </table>
                                 <br><br>                        
                         ';
                 $html .= $htmlDatos;
@@ -63,88 +63,18 @@ class Help
     {
 
         $html = '';
-        $html .= '<!DOCTYPE html>
+        $html .= '<!DOCTYPE>
                     <html>
-                        <head lang="es">
-                            <meta charset="utf-8">                             
-                            <meta http-equiv="X-UA-Compatible" content="IE=edge">   
-                            <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">       
-                            <link rel="shortcut icon" type="image/x-icon" href="../imagenes/cruz.png" />   
-                            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-                            <link rel="stylesheet" href="../util/lte/bower_components/bootstrap/dist/css/bootstrap.min.css">
-                            <link rel="stylesheet" href="../util/lte/bower_components/bootstrap-daterangepicker/daterangepicker.css">
-                            <link rel="stylesheet" href="../util/lte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-                            <link rel="stylesheet" href="../util/lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-                            <link rel="stylesheet" href="../util/lte/bower_components/bootstrap-timepicker/css/timepicker.less">
-                            
-                            <link rel="stylesheet" href="../util/lte/bower_components/select2/dist/css/select2.min.css">
-                            
-                            <link rel="stylesheet" href="../util/lte/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
-                            
-                            <link rel="stylesheet" href="../util/lte/bower_components/swa/sweetalert.css">
-                            
-                            <link rel="stylesheet" href="../util/lte//bower_components/font-awesome/css/font-awesome.min.css">
-                            <link rel="stylesheet" href="../util/lte/bower_components/Ionicons/css/ionicons.min.css">
-                            <link rel="stylesheet" href="../util/lte/dist/css/AdminLTE.min.css">
-                            
-                            <link rel="stylesheet" href="../util/lte/plugins/iCheck/all.css">
-                            
-                            <link rel="stylesheet" href="../util/lte/dist/css/skins/_all-skins.min.css">
-                            <link rel="stylesheet" href="../util/dropify/css/dropify.min.css">
-                            
-                            <link rel="stylesheet"
-                                  href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">';
-        $html .= '</head>
+                    <head lang="es">
+                        <meta charset="utf-8">                             
+                        <meta http-equiv="X-UA-Compatible" content="IE=edge">   
+                        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">       
+                    </head>
                     <body>
                   ';
         $html .= $htmlDatos;
-
-
-                $html .= '
-<script src="../util/lte/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="../util/lte/bower_components/jquery-ui/jquery-ui.min.js"></script>
-<script src="../util/lte/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="../util/lte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-<script src="../util/lte/bower_components/select2/dist/js/select2.full.min.js"></script>
-
-<!--DATA TABLE -->
-<script src="../util/lte/bower_components/datatables.net/js/jquery.dataTables.js"></script>
-<script src="../util/lte/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
-
-<!-- bootstrap datepicker -->
-<script src="../util/lte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<!-- bootstrap color picker -->
-<script src="../util/lte/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
-
-<!--DATA TIMEPICKER  -->
-<script src="../util/lte/bower_components/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-
-<!--sweet alert-->
-<script src="../util/lte/bower_components/swa/sweetalert-dev.js"></script>
-
-<!-- SlimScroll -->
-<script src="../util/lte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="../util/lte/bower_components/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="../util/lte/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../util/lte/dist/js/demo.js"></script>
-<!--  Mostrar el cuadro arrastar imagen -->
-<script src="../util/dropify/js/dropify.min.js"></script>
-
-<script src="../util/lte/plugins/iCheck/icheck.min.js"></script>
-
-<script src="../util/lte/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<!-- bootstrap datepicker -->
-<script src="../util/lte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-
-<!-- fullCalendar -->
-<script src="../util/lte/bower_components/moment/min/moment.min.js"></script>
-</body>';
-                $html .= '</html>';
+        $html .= '</body>';
+        $html .= '</html>';
 
         return $html;
     }
@@ -207,7 +137,7 @@ class Help
 
         $dompdf = new \Dompdf\Dompdf();
         $dompdf->loadHtml(utf8_decode($html));
-
+        $dompdf->set_option('isHtml5ParserEnabled', true);
 // (Optional) Setup the paper size and orientation
         $dompdf->setPaper('A4', 'landscape');
 

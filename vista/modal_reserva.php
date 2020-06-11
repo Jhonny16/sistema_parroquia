@@ -18,24 +18,12 @@
                                    echo date('Y-m-d'); ?>">
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group input-group-sm">
                                         <label for="">Capilla</label>
                                         <select name="" id="combo_capilla_id" class="form-control" disabled=""></select>
                                     </div>
-                                    <div class="form-group input-group-sm">
-                                        <label for="">Tipo Culto</label>
-                                        <select name="" id="combo_tipoculto_id" class="form-control"
-                                                disabled=""></select>
-                                    </div>
-                                    <div class="form-group input-group-sm" id="tipo_culto_misa_comunitaria" style="display: none">
-                                        <label for="">Tipo</label>
-                                        <select name="" id="combo_detail" class="form-control">
-                                            <option value="-" selected>Seleccione detalle tipo de culto</option>
-                                            <option value="Salud">Salud</option>
-                                            <option value="Difunto">Difunto</option>
-                                        </select>
-                                    </div>
+
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group input-group-sm">
@@ -49,26 +37,29 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
 
-                                    <div class="form-group input-group-sm">
-                                        <label for="">Padre</label>
-                                        <select name="" id="combo_padre_id" class="form-control"></select>
-                                    </div>
-                                    <div class="form-group input-group-sm">
-                                        <label for="">Cantor</label>
-                                        <select name="" id="combo_cantor_id" class="form-control"></select>
-                                    </div>
                                     <div class="form-group input-group-sm">
                                         <label for="">Cliente</label>
                                         <select name="" id="combo_cliente_id" class="form-control"></select>
                                     </div>
 
                                 </div>
+
+
                             </div>
                             <div class="row">
-                                <hr style="color:#00e765;background: #00ad9c">
+                                <hr style="color:#00ad9c;background: #00ad9c">
+                                <div class="col-md-3">
+                                    <div class="form-group input-group-sm" >
+                                        <label for="">Tipo</label>
+                                        <select name="" id="combo_detail" class="form-control">
+                                            <option value="-" selected>Seleccione detalle tipo de culto</option>
+                                            <option value="Salud">Salud</option>
+                                            <option value="Difunto">Difunto</option>
+                                        </select>
+                                    </div>
+
+                                </div>
                                 <div class="col-md-3">
                                     <div class="form-group input-group-sm">
                                         <label for="" style="color: #00ad9c">
@@ -96,32 +87,18 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="form-group input-group-sm">
-                                        <label for="" style="color: #00ad9c">Estado pago</label>
-                                        <select name="" id="combo_estado" class="form-control">
-                                            <option value="Pendiente">Pendiente</option>
-                                            <option value="Pagado">Pagado</option>
-                                        </select>
-                                    </div>
-                                </div>
+
 
                             </div>
                             <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label  style="color: #00ad9c">Ofrece(n)</label>
-                                        <textarea class="form-control" rows="3"
-                                                  placeholder=""
-                                                  id="ofrece" disabled></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-9">
+
+                                <div class="col-md-12">
                                     <table class="table table-condensed">
                                         <thead>
                                         <tr>
                                             <th>Quitar</th>
                                             <th>Intención</th>
+                                            <th>Detalle</th>
                                             <th>Precio</th>
                                         </tr>
                                         </thead>
@@ -131,6 +108,7 @@
                                         <thead>
                                         <tr style="background: #A5DC86">
                                             <td></td>
+                                            <td></td>
                                             <td style="text-align: left">Total</td>
                                             <td style="text-align: right"><strong>S/. <span id="total">0.00</span></strong></td>
                                         </tr>
@@ -139,6 +117,29 @@
 
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label  style="color: #00ad9c">Ofrece(n)</label>
+                                        <textarea class="form-control" rows="3"
+                                                  placeholder=""
+                                                  id="ofrece" disabled></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group input-group-sm">
+                                        <label for="" style="color: #00ad9c">Estado pago</label>
+                                        <select name="" id="combo_estado" class="form-control">
+                                            <option value="Pendiente">Pendiente</option>
+                                            <option value="Pagado">Pagado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
 
                     </form>

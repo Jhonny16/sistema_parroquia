@@ -10,11 +10,8 @@ try {
 
     $obj->setEstado($_POST["estado"]);
     $obj->setOfrece($_POST["ofrece"]);
-    $obj->setDetail($_POST["detail"]);
     $obj->setTotal($_POST["total"]);
     $obj->setClienteDni($_POST["cliente_dni"]);
-    $obj->setPadreId($_POST["padre_id"]);
-    $obj->setCantorId($_POST["cantor_id"]);
     $obj->setHorarioId($_POST["horario_id"]);
     $obj->setDetalleReserva($_POST["detalle"]);
 
