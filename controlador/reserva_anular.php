@@ -19,8 +19,8 @@ try {
 
     $respuesta = $obj->anular();
 
-    if ($respuesta > 0) {
-        Funciones::imprimeJSON(200, "Se anuló la reserva.", $respuesta);
+    if ($respuesta) {
+        Funciones::imprimeJSON(200, "La reserva ha sido anulada.", $respuesta);
     } else {
         Funciones::imprimeJSON(203, "Error al guardar", "");
     }

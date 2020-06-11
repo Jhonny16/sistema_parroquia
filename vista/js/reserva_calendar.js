@@ -442,6 +442,9 @@ function create_reserva() {
                     var objDetalle = new Object();
 
                     objDetalle.dirigido = dirigido;
+                    if (importe == '-'){
+                        importe = 0.00;
+                    }
                     objDetalle.importe = importe;
                     objDetalle.detalle = detalle;
                     arrayDetalle.push(objDetalle);

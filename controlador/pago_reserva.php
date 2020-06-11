@@ -18,7 +18,7 @@ try {
 
     $respuesta = $obj->create();
 
-    if ($respuesta > 0) {
+    if ($respuesta) {
         Funciones::imprimeJSON(200, "Se ha realizado el pago de la reserva", $respuesta);
     } else {
         Funciones::imprimeJSON(203, "Error al guardar", "");

@@ -227,7 +227,7 @@ class reserva extends Conexion
             $sentencia->bindParam(":p_ofrece", $this->ofrece);
             $sentencia->bindParam(":p_total", $this->total);
             $sentencia->bindParam(":p_cliente_dni", $this->cliente_dni);
-            $sentencia->bindParam(":p_padre_id", $this->padre_id);
+            $sentencia->bindParam(":p_horario_id", $this->horario_id);
             $sentencia->execute();
             //SELECT int_id FROM intencion order by 1 desc limit 1
 

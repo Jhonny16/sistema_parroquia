@@ -290,11 +290,18 @@ function ver_comprobante(id) {
             var total_limosna = 0;
             var total_templo = 0;
             var total_cantor = 0;
-            for (var i = 0; i < reserva.length; i++) {
-                total_limosna = total_limosna + parseFloat(reserva[i].limosna);
-                total_templo = total_templo + parseFloat(reserva[i].templo);
-                total_cantor = total_cantor + parseFloat(reserva[i].cantor);
+            if (reserva[0].tipoculto_type == 'Comunitario'){
+                for (var i = 0; i < reserva.length; i++) {
+                    total_limosna = total_limosna + parseFloat(reserva[i].limosna);
+                    total_templo = total_templo + parseFloat(reserva[i].templo);
+                    total_cantor = total_cantor + parseFloat(reserva[i].cantor);
+                }
+            }else{
+                total_limosna = parseFloat(reserva[0].limosna);
+                total_templo= parseFloat(reserva[0].templo);
+                total_cantor= parseFloat(reserva[0].cantor);
             }
+
             if (reserva[0].tipoculto_type == 'Comunitario'){
                 $("#fr_limosna").html(reserva[0].total);
                 $("#fr_templo").html('-');
@@ -393,7 +400,6 @@ function pagar(id) {
                     'reserva_id': id
 
                 };
-
                 console.log(data);
                 $.ajax({
                     data: data,
@@ -413,7 +419,7 @@ function pagar(id) {
                                 },
                                 function (isConfirm) {
                                     if (isConfirm) {
-                                        window.location.href = '../vista/reserva_por_horario.php';
+                                        window.location.href = '../vista/reserva_por_horario.php?horario_id=' + horario_id;
                                     }
                                 });
                         }
@@ -551,7 +557,7 @@ function update_padre_cantor() {
                             },
                             function (isConfirm) {
                                 if (isConfirm) {
-                                    window.location.href = '../vista/reserva_por_horario.php';
+                                    window.location.href = '../vista/reserva_por_horario.php?horario_id=' + horario_id;
                                 }
                             });
                     } else {

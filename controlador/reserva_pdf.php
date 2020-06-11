@@ -76,9 +76,16 @@ $htmlDatos = '
                                 $total_templo = 0;
                                 $total_cantor = 0;
                                 for ($i = 0; $i < count($result); $i++) {
-                                    $total_limosna = $total_limosna + $result[$i]["limosna"] ;
-                                    $total_templo = $total_templo + $result[$i]["templo"] ;
-                                    $total_cantor = $total_cantor + $result[$i]["cantor"] ;
+                                    if ($result[0]['tipoculto_type'] == 'Comunitario'){
+                                        $total_limosna = $total_limosna + $result[$i]["limosna"] ;
+                                        $total_templo = $total_templo + $result[$i]["templo"] ;
+                                        $total_cantor = $total_cantor + $result[$i]["cantor"] ;
+                                    }else{
+                                        $total_limosna = $result[0]["limosna"] ;
+                                        $total_templo = $result[0]["templo"] ;
+                                        $total_cantor = $result[0]["cantor"] ;
+                                    }
+
 
                                     $htmlDatos .= '<tr>';
                                     $htmlDatos .= '<td >' . ($i + 1) . '</td>';
