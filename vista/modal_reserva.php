@@ -39,7 +39,17 @@
                                     </div>
 
                                     <div class="form-group input-group-sm">
-                                        <label for="">Cliente</label>
+                                        <div class="input-group input-group-sm">
+                                            <label for="">Cliente</label>
+                                             <button type="button" class="btn btn-info btn-xs pull-right"
+                                                      onclick="nuevo_cliente()"
+                                                      data-toggle="modal" data-target="#mdl_cliente"
+                                                      title="Agergar Cliente"><i class="fa fa-user-plus"></i>
+                                                Nuevo Cliente
+                                            </button>
+                                             </span>
+                                        </div>
+
                                         <select name="" id="combo_cliente_id" class="form-control"></select>
                                     </div>
 
@@ -78,11 +88,11 @@
                                         <div class="input-group input-group-sm">
                                             <input type="text" class="form-control" id="dirigido">
                                             <span class="input-group-btn">
-                                          <button type="button" class="btn btn-block btn-default pull-right"
-                                                  onclick="plus_add()"><i class="fa fa-plus text-blue"></i>
-                                              <span style="color: #00ad9c">Añadir</span>
-                                            </button>
-                                        </span>
+                                              <button type="button" class="btn btn-block btn-default pull-right"
+                                                      onclick="plus_add()"><i class="fa fa-plus text-blue"></i>
+                                                  <span style="color: #00ad9c">Añadir</span>
+                                                </button>
+                                             </span>
                                         </div>
                                     </div>
 
@@ -98,8 +108,8 @@
                                         <tr>
                                             <th>Quitar</th>
                                             <th>Intención</th>
-                                            <th>Detalle</th>
-                                            <th>Precio</th>
+                                            <th id="body_detalle">Detalle</th>
+                                            <th id="body_precio">Precio</th>
                                         </tr>
                                         </thead>
                                         <tbody id="detalle">
@@ -107,8 +117,8 @@
                                         </tbody>
                                         <thead>
                                         <tr style="background: #A5DC86">
-                                            <td></td>
-                                            <td></td>
+                                            <td id="foot_detalle"></td>
+                                            <td id="foot_precio"></td>
                                             <td style="text-align: left">Total</td>
                                             <td style="text-align: right"><strong>S/. <span id="total">0.00</span></strong></td>
                                         </tr>

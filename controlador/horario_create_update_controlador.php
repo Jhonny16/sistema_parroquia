@@ -18,13 +18,19 @@ try {
     /*PREGUNTAR POR EL TIPO DE OPERACION*/
     if ($operation == "agregar") {
         $respuesta = $obj->create($fecha1,$fecha2);
-        if ($respuesta == true) {
-            Funciones::imprimeJSON(200, "Se ha agregado correctamente", "");
+        if ($respuesta == -1) {
+            Funciones::imprimeJSON(203, "Ya existe registro en este horario", "");
+
         }else{
-            Funciones::imprimeJSON(203, "Esta ingresando datos que ya se encuentran registrados. 
+            if ($respuesta == 1) {
+                Funciones::imprimeJSON(200, "Se ha agregado correctamente", "");
+            }else{
+                Funciones::imprimeJSON(203, "Esta ingresando datos que ya se encuentran registrados. 
             Verifique los parametros seleccionados. Gracias! ", "");
 
+            }
         }
+
 
     }
 

@@ -94,7 +94,6 @@ class TipoCulto extends Conexion
                         t.tc_descripcion,
                         t.tc_tipo,
                         t.tc_tiempo_maximo,
-                        t.tc_precio,
                         c.cul_nombre as culto
 
                 from
@@ -187,7 +186,6 @@ class TipoCulto extends Conexion
                                  tc_descripcion,
                                  tc_tipo,
                                  tc_tiempo_maximo,
-                                 tc_precio,
                                  cul_id
                                 )
 
@@ -197,7 +195,6 @@ class TipoCulto extends Conexion
                                 :p_tc_descripcion, 
                                 :p_tc_tipo,
                                 :p_tc_tiempo_maximo,
-                                :p_tc_precio,
                                 :p_cul_id
                                 );
                         ";
@@ -207,7 +204,6 @@ class TipoCulto extends Conexion
                 $sentencia->bindParam(":p_tc_descripcion", $this->tc_descripcion);
                 $sentencia->bindParam(":p_tc_tipo", $this->tc_tipo);
                 $sentencia->bindParam(":p_tc_tiempo_maximo", $this->tc_tiempo_maximo);
-                $sentencia->bindParam(":p_tc_precio", $this->tc_precio);
                 $sentencia->bindParam(":p_cul_id", $this->cul_id);
                 $sentencia->execute();
 
@@ -241,7 +237,6 @@ class TipoCulto extends Conexion
                             tc_descripcion,
                             tc_tipo,
                             tc_tiempo_maximo,
-                            tc_precio,
                             cul_id
                     from
                             tipo_culto t
@@ -274,7 +269,6 @@ class TipoCulto extends Conexion
                         tc_descripcion 		= :p_tc_descripcion, 
                         tc_tipo                 = :p_tc_tipo,
                         tc_tiempo_maximo        = :p_tc_tiempo_maximo,
-                        tc_precio               = :p_tc_precio,
                         cul_id  		= :p_cul_id 
 
                  WHERE 
@@ -287,7 +281,6 @@ class TipoCulto extends Conexion
             $sentencia->bindParam(":p_tc_descripcion", $this->tc_descripcion);
             $sentencia->bindParam(":p_tc_tipo", $this->tc_tipo);
             $sentencia->bindParam(":p_tc_tiempo_maximo", $this->tc_tiempo_maximo);
-            $sentencia->bindParam(":p_tc_precio", $this->tc_precio);
             $sentencia->bindParam(":p_cul_id", $this->cul_id);
             $sentencia->bindParam(":p_tc_id", $this->tc_id);
             $sentencia->execute();

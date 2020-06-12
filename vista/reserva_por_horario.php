@@ -114,6 +114,7 @@
                                                 <address>
                                                     <strong><span id="fr_cliente"></span></strong><br>
                                                     Tipo de culto : <span id="fr_tipoculto"></span><br>
+                                                    <span id="fr_detalle_tipoculto"> </span><br>
                                                 </address>
                                             </div>
                                             <!-- /.col -->
@@ -145,7 +146,7 @@
                                                         <th>#</th>
                                                         <th id="fr_detalle_detalle">Detalle</th>
                                                         <th>Intención</th>
-                                                        <th>Importe</th>
+                                                        <th id="fr_detalle_importe">Importe</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody id="fr_detalle">

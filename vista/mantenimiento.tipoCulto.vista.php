@@ -100,14 +100,7 @@
                                                     </p>
                                                 </div>
                                                 
-                                                <div class="col-xs-6">
-                                                    <p>
-                                                        Estipendio <input type="text" 
-                                                                      name="txtPrecio" 
-                                                                        id="txtPrecio" 
-                                                                      class="form-control input-sm text-bold" required=""> 
-                                                    </p>
-                                                </div>
+
                                             </div>
                                             
                                             <div class="row">                                                

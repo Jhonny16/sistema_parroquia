@@ -121,20 +121,32 @@ class TipoCultoDetalle extends Conexion
 
     public function agregar()
     {
+        $this->dbLink->beginTransaction();
 
         try {
 
+            $sql = "select * from f_generar_correlativo('detalle_tipoculto') as correlativo";
+            $sentencia = $this->dbLink->prepare($sql);
+            $sentencia->execute();
 
+
+            if($sentencia->rowCount()) { /*rowcount es un metodo por tanto lleva parentesis*/
+                //si se encontro el correlativo para la tabla parroquia
+                $resultado = $sentencia->fetch(PDO::FETCH_ASSOC); /*FETCH_ASSOC para no repetir la informacion y obtenerla con el nombre del campo*/
+                $nuevocul_id = $resultado["correlativo"]; //cargar nuevo codigo de culto
+                $this->setId($nuevocul_id);
 
                 $sql = "
                     INSERT INTO det_culto
                                 (
+                                det_id,
                                  det_nombre, 
                                  det_descripcion,
                                  tc_id                                 
                                 )
 
                         VALUES  (
+                                :p_id,
                                 :p_nombre, 
                                 :p_descripcion, 
                                 :p_tipoculto                              
@@ -144,10 +156,28 @@ class TipoCultoDetalle extends Conexion
                 $sentencia->bindParam(":p_nombre", $this->nombre);
                 $sentencia->bindParam(":p_descripcion", $this->descripcion);
                 $sentencia->bindParam(":p_tipoculto", $this->tipoculto_id);
+                $sentencia->bindParam(":p_id", $this->id);
                 $sentencia->execute();
+
+
+                $sql = "update correlativo set numero = numero + 1 where tabla = 'detalle_tipoculto'";
+                $sentencia= $this->dbLink->prepare($sql);
+                $sentencia->execute();
+
+                //CONFIRMAR LA TRANSACCION
+                $this->dbLink->commit();
+
+
                 return TRUE;
+            }
+            else{
+                //no se encontro el correlativo para la tabla parroquia
+                throw new Exception("No se encontró el correlativo para la tabla Culto");
+            }
+
 
         } catch (Exception $exc) {
+            $this->dbLink->rollback();//ABORTAR /DESHACER TODO LO QUE SE HA
             throw $exc;
         }
     }

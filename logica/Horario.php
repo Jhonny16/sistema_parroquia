@@ -166,7 +166,7 @@ class Horario extends Conexion
                     $sentencia->execute();
 
                     if($sentencia->rowCount()){
-                        return false;
+                        return 0;
                     }else{
                         $sw=1;
 
@@ -174,28 +174,57 @@ class Horario extends Conexion
 
                 }
 
-                if($sw == 1){
-                    for ($i = 0; $i <= (int)$dias; $i++) {
-                        $fecha = date("Y-m-d", strtotime($date1 . "+" . $i . " days"));
-                        //echo date("d-m-Y",strtotime($datetime1."+ 1 days"));
-                        $array = $this->hora_id;
-                        for ($j = 0; $j < count($array); $j++) {
-                            $sql = "INSERT INTO horario (hora_id,tipoculto_id,fecha,capilla_id) VALUES (
+                $bnd = 0;
+                for ($j = 0; $j < count($array); $j++) {
+
+                    $sql = "select count(id) as numeros_horarios from horario where 
+                            hora_id = :p_hora and
+                            fecha = :p_fecha and
+                            capilla_id = :p_capilla ";
+                    $sentencia = $this->dbLink->prepare($sql);
+                    $sentencia->bindParam(":p_hora", $array[$j]);
+                    $sentencia->bindParam(":p_fecha", $fecha);
+                    $sentencia->bindParam(":p_capilla", $this->capilla_id);
+                    $sentencia->execute();
+                    $resultado = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+                    if($sentencia->rowCount()){
+                        $cant = $resultado[$i]['numeros_horarios'];
+                        if($cant > 0){
+                            $bnd = 1;
+                            break;
+                        }
+                    }
+
+                }
+
+                if ($bnd == 1){
+                    return -1;
+                }else{
+                    if($sw == 1){
+                        for ($i = 0; $i <= (int)$dias; $i++) {
+                            $fecha = date("Y-m-d", strtotime($date1 . "+" . $i . " days"));
+                            //echo date("d-m-Y",strtotime($datetime1."+ 1 days"));
+                            $array = $this->hora_id;
+                            for ($j = 0; $j < count($array); $j++) {
+                                $sql = "INSERT INTO horario (hora_id,tipoculto_id,fecha,capilla_id) VALUES (
                                 :p_hora, 
                                 :p_tipo_culto, 
                                 :p_fecha, 
                                 :p_capilla);
                         ";
-                            $sentencia = $this->dbLink->prepare($sql);
-                            $sentencia->bindParam(":p_hora", $array[$j]);
-                            $sentencia->bindParam(":p_tipo_culto", $this->tipoculto_id);
-                            $sentencia->bindParam(":p_fecha", $fecha);
-                            $sentencia->bindParam(":p_capilla", $this->capilla_id);
-                            $sentencia->execute();
+                                $sentencia = $this->dbLink->prepare($sql);
+                                $sentencia->bindParam(":p_hora", $array[$j]);
+                                $sentencia->bindParam(":p_tipo_culto", $this->tipoculto_id);
+                                $sentencia->bindParam(":p_fecha", $fecha);
+                                $sentencia->bindParam(":p_capilla", $this->capilla_id);
+                                $sentencia->execute();
+                            }
                         }
                     }
+                    return 1;
                 }
-                return TRUE; //RETORNA VERDARERO CUANDO HA REGISTRADO TODO CORRECTAMENTE
+
+
 
             }
 
@@ -287,7 +316,7 @@ class Horario extends Conexion
     public function get_data(){
         try {
             $sql = "select r.id, h.capilla_id, h.tipoculto_id, h.fecha, hp.hora_hora,
-                    t.tc_precio, r.padre, r.cantor, r.cliente_dni, r.estado,h.id as horario_id,
+                    r.padre, r.cantor, r.cliente_dni, r.estado,h.id as horario_id,
                     (case when t.tc_tipo = 'I' then 'Individual' else 'Comunitario' end) as tipo,
                      di.dirigido, di.importe, r.ofrece, r.detail
                     from reserva r inner join detalle_intencion di on r.id = di.intencion_id

@@ -119,10 +119,12 @@ $("#frm_detail_tipoculto").submit(function(event){
             if (isConfirm){ //el usuario hizo clic en el boton SI
 
                 var operacion = $("#txtTipoOperacion").val();
+                console.log(operacion);
                 var id = "";
 
                 if (operacion === "agregar"){
                     id = "nuevo";
+                    console.log(id);
                 }else{
                     id = $("#txtCodigo").val();
                 }
@@ -131,17 +133,19 @@ $("#frm_detail_tipoculto").submit(function(event){
                 var descripcion = $("#descripcion_detalletc").val();
                 var tipo_culto = $("#combo_tipoculto").val();
 
+                var data = {
+                    id: id,
+                    nombre: nombre,
+                    descripcion: descripcion,
+                    tipo_culto: tipo_culto,
+                    operacion: operacion
+                };
+                console.log(data);
+
                 $.post
                 (
                     "../controlador/tipoculto_detalle_agregar_editar.php",
-                    {
-                        id: id,
-                        nombre: nombre,
-                        descripcion: descripcion,
-                        tipo_culto: tipo_culto,
-                        operacion: operacion
-
-                    }
+                   data
                 ).done(function(resultado){
                     var datosJSON = resultado;
 

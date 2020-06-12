@@ -161,7 +161,7 @@ function buscar_reservas() {
                                 '<i class="fa fa-eye text-info" title="Detalle completo"></i></a> &nbsp;';
                             html += '<a style="cursor:pointer" class="nav-link" onclick="anular(' + item.id + ')">' +
                                 '<i class="fa fa-trash-o text-orange" title="Anular reserva"></i></a> &nbsp;';
-                            if (item.estado != 'Pagado') {
+                            if (item.estado != 'Pagado' || item.estado != 'Anulado') {
                                 html += '<a style="cursor:pointer" class="nav-link" onclick="pagar(' + item.id + ')">' +
                                     '<i class="fa fa-credit-card text-success" title="Pagar reserva"></i></a> &nbsp;';
                             }
@@ -280,6 +280,7 @@ function ver_comprobante(id) {
             $("#fr_fecha").html(reserva[0].fecha_pago);
             $("#fr_cliente").html(reserva[0].cliente);
             $("#fr_tipoculto").html(reserva[0].tc_nombre);
+            $("#fr_detalle_tipoculto").html('Detalle : ' + reserva[0].tipoculto_detalle);
             $("#fr_ofrece").html(reserva[0].ofrece);
             $("#fr_horario").html(reserva[0].horario);
             $("#fr_padre").html(reserva[0].padre);
@@ -316,14 +317,22 @@ function ver_comprobante(id) {
 
             for (var i = 0; i < reserva.length; i++) {
                 var fila = "<tr>" +
-                    "<td>" + (i + 1) + "</td>" +
-                    "<td>" + reserva[i].tipoculto_detalle + "</td>" +
-                    "<td>" + reserva[i].dirigido + "</td>" ;
+                    "<td>" + (i + 1) + "</td>" ;
+                if (reserva[i].tipoculto_type == 'Comunitario') {
+                    fila += "<td>" + reserva[i].tipoculto_detalle + "</td>" ;
+
+                }else{
+                    $("#fr_detalle_detalle").removeAttr('style');
+                    $("#fr_detalle_detalle").attr('style','display:none');
+                    $("#fr_detalle_importe").removeAttr('style');
+                    $("#fr_detalle_importe").attr('style','display:none');
+                }
+                fila +=  "<td>" + reserva[i].dirigido + "</td>" ;
                 if (reserva[i].tipoculto_type == 'Comunitario') {
                     fila += "<td style='text-align: right'>s/. " + reserva[i].importe + "</td>";
 
                 } else {
-                    fila += "<td style='text-align: right'>s/. -</td>";
+                    fila += "<td style='display: none;text-align: right'>s/. -</td>";
 
                 }
                 fila += "</tr>";

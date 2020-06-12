@@ -69,6 +69,7 @@
             </div>
                 <?php require_once 'modal_reserva.php' ;?>
                 <?php require_once 'modal_reserva_lista.php' ;?>
+                <?php require_once 'mdl_cliente.php' ;?>
 
         </section>
 
@@ -82,6 +83,7 @@
 <?php require_once 'scripts.vista.php'; ?>
 <script src="js/reserva_calendar.js" type="text/javascript"></script>
 <script src="js/reserva_calendar_lista.js" type="text/javascript"></script>
+<script src="js/add_cliente.js" type="text/javascript"></script>
 
 </body>
 </html> 

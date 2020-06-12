@@ -103,6 +103,10 @@ function listar(){
     var tipo_culto = $("#busqueda_tipoculto").val();
     var capilla = $("#busqueda_capilla").val();
 
+    if(capilla == "0"){
+        swal("Nota","Selecione Capilla", "warning");
+        return 0;
+    }
     if(hora == null || hora== ""){
         hora = 0;
     }
@@ -110,6 +114,7 @@ function listar(){
         tipo_culto = 0;
     }
     if(capilla == null){
+
         capilla = 0;
     }
 

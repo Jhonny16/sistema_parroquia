@@ -21,9 +21,6 @@ try {
         ! isset($_POST["p_tc_tiempo_maximo"]) || 
           empty($_POST["p_tc_tiempo_maximo"]) ||
             
-        ! isset($_POST["p_tc_precio"]) || 
-          empty($_POST["p_tc_precio"]) ||
-            
         ! isset($_POST["p_cul_id"]) || 
           empty($_POST["p_cul_id"]) 
                 
@@ -38,7 +35,6 @@ try {
         $tc_descripcion = $_POST["p_tc_descripcion"];        
         $tc_tipo = $_POST["p_tc_tipo"];
         $tc_tiempo_maximo = $_POST["p_tc_tiempo_maximo"];
-        $tc_precio = $_POST["p_tc_precio"];        
         $cul_id = $_POST["p_cul_id"];
        
         
@@ -54,7 +50,6 @@ try {
          $objTipoCulto->setTc_descripcion($tc_descripcion);         
          $objTipoCulto->setTc_tipo($tc_tipo);
          $objTipoCulto->setTc_tiempo_maximo($tc_tiempo_maximo);
-         $objTipoCulto->setTc_precio($tc_precio);         
          $objTipoCulto->setCul_id($cul_id);
          
          

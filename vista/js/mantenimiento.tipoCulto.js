@@ -23,7 +23,6 @@ function listar()
                         html += '<tr style="background-color: #ededed; height:25px;">';
                         html += '<th>COD.TIPO</th>';
                         html += '<th>NOMBRE</th>';
-                        html += '<th>ESTIPENDIO</th>';
                         html += '<th>DESCRIPCIÓN</th>';
                         html += '<th>TIEMPO MAX.</th>';
                         html += '<th>TIPO</th>';                        
@@ -38,7 +37,6 @@ function listar()
                         html += '<tr>';
                         html += '<td align="center">'+item.tc_id+'</td>';
                         html += '<td>'+item.tc_nombre+'</td>';
-                        html += '<td>'+item.tc_precio+'</td>';
                         html += '<td>'+item.tc_descripcion+'</td>';
                         html += '<td>'+item.tc_tiempo_maximo+'</td>';
                         html += '<td>'+item.tc_tipo+'</td>';
@@ -119,8 +117,7 @@ $("#btnagregar").click(function(){
     $("#txtDescripcion").val("");
     
     $("#txtTiempoMaximo").val("");
-    $("#txttxtPrecio").val("");
-    
+
     $("#cboCulto").val("");
 });
 
@@ -161,8 +158,7 @@ $("#frmgrabar").submit(function(event){
             
             var v_p_tc_tipo = $("#cboTipo").val();
             var v_p_tc_tiempo_maximo = $("#txtTiempoMaximo").val();
-            var v_p_tc_precio = $("#txtPrecio").val();
-            
+
             var v_p_cul_id = $("#cboCulto").val();            
             
             $.post
@@ -175,8 +171,7 @@ $("#frmgrabar").submit(function(event){
                         
                         p_tc_tipo: v_p_tc_tipo,
                         p_tc_tiempo_maximo: v_p_tc_tiempo_maximo,
-                        p_tc_precio: v_p_tc_precio,
-                        
+
                         p_cul_id: v_p_cul_id,                        
                         p_tipo_operacion: v_p_tipo_operacion
                        
@@ -219,8 +214,7 @@ function leerDatos(tc_id){
                 
                 $("#cboTipo").val(datosJSON.datos.tc_tipo);
                 $("#txtTiempoMaximo").val(datosJSON.datos.tc_tiempo_maximo);
-                $("#txtPrecio").val(datosJSON.datos.tc_precio);
-                
+
                 
                 $("#cboCulto").val(datosJSON.datos.cul_id);
                               

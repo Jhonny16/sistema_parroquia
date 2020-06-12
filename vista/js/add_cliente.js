@@ -1,9 +1,9 @@
 $(document).ready(function(){
     // alert("se esta ejecutando codigo JS")
 
-    listar();
+   //listar();
    cargarComboCargo("#cboCargo","s");
-    cargarComboOcup("#cboOcupacion","s");
+   cargarComboOcup("#cboOcupacion","s");
 });
 function cargarComboCargo(p_nombreCombo, p_tipo){
     $.post
@@ -143,6 +143,7 @@ $("#frm_save_cliente").submit(function(event){
                     var datosJSON = resultado;
                     if (datosJSON.estado === 200){
                         swal("Exito", datosJSON.mensaje, "success");
+                        cargarClientenewId("#combo_cliente_id");
                         $("#close_mld_cliente").click();
                     }else{
                         swal("Mensaje del sistema", resultado , "warning");

@@ -12,7 +12,7 @@ $(document).ready(function () {
     });
     cargarCapillaId("#combo_capilla_id");
     cargarTipoCultoId("#combo_tipoculto_id");
-    cargarClienteId("#combo_cliente_id");
+    cargarClientenewId("#combo_cliente_id");
 
 
 });
@@ -71,7 +71,7 @@ function cargarTipoCultoId(p_nombreCombo) {
     });
 }
 
-function cargarClienteId(p_nombreCombo) {
+function cargarClientenewId(p_nombreCombo) {
     $.post
     (
         "../controlador/persona_cliente_listar_controlador.php"
@@ -196,7 +196,7 @@ function lista() {
 
                 //Aplicar la funcion datatable a la tabla donde se muestra el resultado
                 $('#table_reserva_lista').dataTable({
-                    "aaSorting": [[0, "asc"]],
+                    "aaSorting": [[2, "asc"]],
                     "bScrollCollapse": true,
                     "bPaginate": true,
                     // "sScrollX": "120%",
@@ -341,6 +341,11 @@ function comparar_fecha(dias, fecha, id) {
 function plus_add() {
     console.log(horario_seleccionado.tipoculto_type);
 
+    if($("#combo_detail").val() == "" || $("#combo_detail").val()== '0'){
+        swal("Nota", 'Antes de añadir debe seleccionar el tipo de detalle de culto', "info");
+        return 0;
+    }
+
     var dirigido = $("#dirigido").val();
     var detalle = $("#combo_detail").val();
     var costo = $("#precio").val();
@@ -352,11 +357,25 @@ function plus_add() {
 
     var fila = "<tr>" +
         "<td align=\"center\" id=\"celiminar\"><a href=\"javascript:void();\"><i class=\"fa fa-trash text-orange\"></i></a></td>" +
-        "<td>" + dirigido + "</td>" +
-        "<td>" + detalle + "</td>";
+        "<td>" + dirigido + "</td>";
+
     if (horario_seleccionado.tipoculto_type == 'Individual') {
-        fila += "<td style=\"text-align: right\">-</td>";
+        $("#body_detalle").removeAttr('style');
+        $("#body_precio").removeAttr('style');
+        $("#body_detalle").attr('style','display:none');
+        $("#body_precio").attr('style','display:none');
+
+        $("#foot_detalle").removeAttr('style');
+        $("#foot_precio").removeAttr('style');
+        $("#foot_detalle").attr('style','display:none');
+        $("#foot_precio").attr('style','display:none');
+
+
+        fila +="<td style='display: none;'>" + detalle + "</td>";
+        fila += "<td style='display: none ; text-align: right;'>-</td>";
+
     } else {
+        fila +="<td>" + detalle + "</td>";
         fila +="<td style=\"text-align: right\">" + costo + "</td>";
     }
     fila += "</tr>";
