@@ -110,9 +110,10 @@
                                         <!-- info row -->
                                         <div class="row invoice-info">
                                             <div class="col-sm-4 invoice-col">
-                                                Cliente:
+                                                Capilla:
                                                 <address>
-                                                    <strong><span id="fr_cliente"></span></strong><br>
+                                                    <strong><span id="fr_capilla"></span></strong><br>
+                                                    Cliente : <span id="fr_cliente"></span><br>
                                                     Tipo de culto : <span id="fr_tipoculto"></span><br>
                                                     <span id="fr_detalle_tipoculto"> </span><br>
                                                 </address>

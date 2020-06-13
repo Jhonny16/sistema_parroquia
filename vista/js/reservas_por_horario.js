@@ -277,6 +277,7 @@ function ver_comprobante(id) {
             $("#fr_combo_cantor_id").val(reserva[0].cantor_dni);
 
             $("#fr_codigopago").html(reserva[0].pago_code);
+            $("#fr_capilla").html(reserva[0].capilla_nombre);
             $("#fr_fecha").html(reserva[0].fecha_pago);
             $("#fr_cliente").html(reserva[0].cliente);
             $("#fr_tipoculto").html(reserva[0].tc_nombre);
@@ -319,6 +320,8 @@ function ver_comprobante(id) {
                 var fila = "<tr>" +
                     "<td>" + (i + 1) + "</td>" ;
                 if (reserva[i].tipoculto_type == 'Comunitario') {
+                    $("#fr_detalle_tipoculto").removeAttr('style');
+                    $("#fr_detalle_tipoculto").attr('style','display:none');
                     fila += "<td>" + reserva[i].tipoculto_detalle + "</td>" ;
 
                 }else{

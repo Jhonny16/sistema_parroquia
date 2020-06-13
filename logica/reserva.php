@@ -403,6 +403,7 @@ class reserva extends Conexion
             $sql = "
               select  
               c.cap_id as capilla_id,
+              c.cap_nombre as capilla_nombre,
                        r.id,
                        r.code,
                        r.fecha as fecha_reserva,
