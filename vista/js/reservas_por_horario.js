@@ -159,12 +159,28 @@ function buscar_reservas() {
                             html += '<td style="text-align: center">';
                             html += '<a style="cursor:pointer" class="nav-link" onclick="ver_comprobante(' + item.id + ')">' +
                                 '<i class="fa fa-eye text-info" title="Detalle completo"></i></a> &nbsp;';
-                            html += '<a style="cursor:pointer" class="nav-link" onclick="anular(' + item.id + ')">' +
-                                '<i class="fa fa-trash-o text-orange" title="Anular reserva"></i></a> &nbsp;';
-                            if (item.estado != 'Pagado' || item.estado != 'Anulado') {
-                                html += '<a style="cursor:pointer" class="nav-link" onclick="pagar(' + item.id + ')">' +
-                                    '<i class="fa fa-credit-card text-success" title="Pagar reserva"></i></a> &nbsp;';
+                            if (item.estado == 'Anulado'){
+
+                            }else{
+                                if (item.estado == 'Pagado') {
+                                    html += '<a style="cursor:pointer" class="nav-link" onclick="anular(' + item.id + ')">' +
+                                        '<i class="fa fa-trash-o text-orange" title="Anular reserva"></i></a> &nbsp;';
+                                }else{
+                                    html += '<a style="cursor:pointer" class="nav-link" onclick="anular(' + item.id + ')">' +
+                                        '<i class="fa fa-trash-o text-orange" title="Anular reserva"></i></a> &nbsp;';
+                                    html += '<a style="cursor:pointer" class="nav-link" onclick="pagar(' + item.id + ')">' +
+                                        '<i class="fa fa-credit-card text-success" title="Pagar reserva"></i></a> &nbsp;';
+                                }
                             }
+
+
+                            // html += '<a style="cursor:pointer" class="nav-link" onclick="anular(' + item.id + ')">' +
+                            //     '<i class="fa fa-trash-o text-orange" title="Anular reserva"></i></a> &nbsp;';
+                            // if (item.estado != 'Pagado' || item.estado != 'Anulado') {
+                            //     html += '<a style="cursor:pointer" class="nav-link" onclick="pagar(' + item.id + ')">' +
+                            //         '<i class="fa fa-credit-card text-success" title="Pagar reserva"></i></a> &nbsp;';
+                            // }
+
                             if (item.padre == '-' || item.nombre_cantor == '-') {
                                 $("#btn_update_padre_cantor").removeAttr('style');
                                 mostrar_modal_padre_cantor(item.capilla_id, item.padre_dni, item.cantor_dni);
@@ -360,7 +376,7 @@ function anular(id) {
             confirmButtonText: 'SI',
             cancelButtonText: "NO",
             showCancelButton: true,
-            closeOnConfirm: true,
+            closeOnConfirm: false,
             closeOnCancel: true,
             imageUrl: "../imagenes/preguntar.png"
         },
@@ -379,8 +395,21 @@ function anular(id) {
                     success: function (resultado) {
                         console.log(resultado);
                         var datosJSON = resultado;
-                        if (datosJSON.estado === 200) {
-                            swal("Exito!", datosJSON.mensaje, "success");
+                        if (datosJSON.estado == 200) {
+                            console.log(resultado.estado);
+                            swal({
+                                    title: "Genial",
+                                    text: resultado.mensaje,
+                                    confirmButtonColor: '#3d9205',
+                                    confirmButtonText: 'OK',
+                                    closeOnConfirm: true,
+                                    closeOnCancel: true
+                                },
+                                function (isConfirm) {
+                                    if (isConfirm) {
+                                        window.location.href = '../vista/reserva_por_horario.php?horario_id=' + horario_id;
+                                    }
+                                });
                         }
                     },
                     error: function (error) {
@@ -402,7 +431,7 @@ function pagar(id) {
             confirmButtonText: 'SI',
             cancelButtonText: "NO",
             showCancelButton: true,
-            closeOnConfirm: true,
+            closeOnConfirm: false,
             closeOnCancel: true,
             imageUrl: "../imagenes/preguntar.png"
         },
@@ -420,7 +449,7 @@ function pagar(id) {
                     success: function (resultado) {
                         console.log(resultado);
                         var datosJSON = resultado;
-                        if (datosJSON.estado === 200) {
+                        if (datosJSON.estado == 200) {
                             swal({
                                     title: "Genial",
                                     text: resultado.mensaje,
