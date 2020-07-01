@@ -37,7 +37,9 @@
 
 <script src="../util/lte/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 <!-- bootstrap datepicker -->
-<script src="../util/lte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<!--<script src="../util/lte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>-->
+<script src="../util/lte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+<script src="../util/lte/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
 
 <!-- fullCalendar -->
 <script src="../util/lte/bower_components/moment/min/moment.min.js"></script>
@@ -46,6 +48,9 @@
 <script src="js/mensajes_texto.js"></script>
 <script>
 
+    $('#cal').datepicker({
+    });
+    $("#cal").addClass("notraslate");
 
     $('.select2').select2()
 
@@ -63,6 +68,7 @@
         'autoWidth': false
     })
 
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'MM/DD/YYYY hh:mm A' }})
 
     //Date range picker
     $('#reservation').daterangepicker();
