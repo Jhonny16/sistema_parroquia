@@ -251,7 +251,12 @@
                             </span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="reporte_utilidades.php"><i class="fa fa-circle-o text-green"></i> Utilidades</a></li>
+                                    <!--<li><a href="reporte_utilidades.php"><i class="fa fa-circle-o text-green"></i> Utilidades</a></li>-->
+                                    <li><a href="reporte_misa_comunitaria.php"><i class="fa fa-circle-o text-green"></i> Misa comunitaria</a></li>
+                                    <li><a href="reporte_misa_comunitaria_utilidades.php"><i class="fa fa-circle-o text-green"></i> Misa comuntaria utilidades</a></li>
+                                    <li><a href="reporte_misa_individual_utilidades.php"><i class="fa fa-circle-o text-green"></i> Misa individual utilidades</a></li>
+                                    <li><a href="reporte_resultado_caja.php"><i class="fa fa-circle-o text-green"></i> Resultado de caja</a></li>
+                                    <li><a href="reporte_resultado_padre.php"><i class="fa fa-circle-o text-green"></i> Resultado limosnas y misas</a></li>
                                 </ul>
                             </li>
                      ';

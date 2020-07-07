@@ -14,6 +14,7 @@ try {
     $obj->setClienteDni($_POST["cliente_dni"]);
     $obj->setHorarioId($_POST["horario_id"]);
     $obj->setDetalleReserva($_POST["detalle"]);
+    $obj->setUserId($_POST["user_id"]);
 
     $respuesta = $obj->create();
 

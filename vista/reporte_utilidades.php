@@ -33,7 +33,7 @@
 
         <!-- Main content -->
         <section class="content">
-            <form action="../controlador/capilla_utilidades_pdf_controlador.php" method="post" target="_blank">
+            <form  method="post" target="_blank">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="box box-info">

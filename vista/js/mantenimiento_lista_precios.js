@@ -8,6 +8,7 @@ $(document).ready(function () {
     lista_precios();
 
 
+
 });
 
 function combo_capillas(){

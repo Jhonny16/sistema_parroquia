@@ -26,8 +26,7 @@
 <!-- bootstrap datepicker -->
 <link rel="stylesheet" href="../util/lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 <!-- bootstrap timepicker -->
-<link rel="stylesheet" href="../util/lte/bower_components/bootstrap-timepicker/css/timepicker.less">
-
+<link rel="stylesheet" href="../util/lte//plugins/timepicker/bootstrap-timepicker.min.css">
 <!-- Select2 -->
 <link rel="stylesheet" href="../util/lte/bower_components/select2/dist/css/select2.min.css">
 

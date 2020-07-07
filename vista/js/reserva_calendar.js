@@ -5,14 +5,40 @@ var number_reservas = 0;
 
 $(document).ready(function () {
 
+    var f = new Date();
+    var mes = f.getMonth() +1;
+    var dia = f.getDate();
+    if(mes<10) {
+        mes  = '0'+ mes;
+    }
+    if(dia<10) {
+        dia  = '0'+ dia;
+    }
+    fecha = f.getFullYear() + "-" +  mes + "-" + dia;
+
+    console.log(fecha);
+
+    $("#day_title").empty();
+    $("#day_title").html(fecha);
+    $("#fecha").val(fecha);
+    $("#user_name").val($("#sesion_user_name").val());
+
+    lista();
+
+
     $('#calendario').datepicker({locale: 'es'}).on("changeDate", function (e) {
         console.log(e.format(0, "yyyy-mm-dd"));
         fecha = e.format(0, "yyyy-mm-dd");
+        $("#day_title").empty();
+        $("#day_title").html(fecha);
+        $("#fecha").val(fecha);
         lista();
     });
     cargarCapillaId("#combo_capilla_id");
     cargarTipoCultoId("#combo_tipoculto_id");
     cargarClientenewId("#combo_cliente_id");
+
+
 
 
 });
@@ -139,6 +165,7 @@ function lista() {
                     '<th>Capilla</th>' +
                     '<th># Reservas</th>' +
                     '<th>Ver reservas</th>' +
+                    '<th>Pdf</th>' +
                     '</tr>' +
                     '</thead>' +
                     '<tbody>';
@@ -147,6 +174,7 @@ function lista() {
 
 
                     html += '<tr>';
+
                     if (item.disponibilidad == 'Disponible') {
                         html += '<td style="text-align: center">';
                         // html += '<input type="radio" name="radio_reserva_id" class="flat-red" onclick="horario_selection(' + item.id + ')">';
@@ -185,7 +213,23 @@ function lista() {
                         }
 
                     }
+                    if (parseInt(item.numero_reservas) > 0){
+                        html += '<td>';
+                        html += '<form id="form_horario" action="../controlador/reporte_misa_por_hora.php" method="post" target="_blank">';
+                        html += '<input style="display: none" name="horario_id" value="' + item.id + '">';
+                        html += '<input style="display: none" name="user_name" value="' + $("#sesion_user_name").val() + '">';
+                        html += '<a href="javascript:void();" onclick="document.getElementById(\'form_horario\').submit()">' +
+                            '<i class="fa fa-file-pdf-o text-danger"></i></a>';
+                        html += '</form>';
+                        html += '</td>';
+                    }else{
+                        html += '<td>-</td>';
+                    }
+
+
+
                     html += '</tr>';
+
 
 
                 });
@@ -205,7 +249,7 @@ function lista() {
 
             } else {
                 $("#reserva_lista").empty();
-                swal("Nota", datosJSON.mensaje, "warning");
+                swal("Nota",  "No hay eventos para esta fecha", "warning");
             }
 
         },
@@ -215,6 +259,43 @@ function lista() {
         }
     });
 
+
+}
+
+
+function generate_pdf(id){
+
+
+    var data = {
+        'horario_id': id,
+        'user_name': $("#sesion_user_name").val()
+    };
+
+    console.log(data);
+    $.ajax({
+        data: data,
+        url: "../controlador/reporte_misa_por_hora.php",
+        type: "post",
+        success: function (resultado) {
+            console.log(resultado);
+
+            //window.location.href = resultado.redirect;
+            //window.open('../controlador/reporte_misa_por_hora.php','_blank');
+            // $this.attr("href", "../controlador/reporte_misa_por_hora.php");
+            // $this.attr("target", "_blank");
+            // if (resultado.estado === 200) {
+            //     $this.attr("href", "../controlador/reporte_misa_por_hora.php");
+            //     $this.attr("target", "_blank");
+            // } else {
+            //     swal("Nota",  "No hay eventos para esta fecha", "warning");
+            // }
+
+        },
+        error: function (error) {
+            console.log(error);
+            var datosJSON = $.parseJSON(error.responseText);
+        }
+    });
 
 }
 
@@ -476,6 +557,7 @@ function create_reserva() {
                     total: $("#total").html(),
                     cliente_dni: $("#combo_cliente_id").val(),
                     horario_id: $("#horario_id").val(),
+                    user_id: $("#sesion_user_id").val(),
                     detalle: jsonDetalle
 
                 };

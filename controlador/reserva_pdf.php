@@ -211,7 +211,7 @@ $htmlDatos = '
 //echo $htmlDatos;
 $titulo = 'IMPRESIÓN DE RESERVA';
 $htmlReporte = Help::exportar_pdf(utf8_encode($htmlDatos));
-Help::generarReporte($htmlReporte, 2, 'PDF_reserva');
+Help::generarReporte($htmlReporte, 2, 'PDF_reserva', "horizontal");
 
 
 

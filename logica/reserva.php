@@ -21,6 +21,25 @@ class reserva extends Conexion
     private $cantor_id;
     private $horario_id;
     private $detalle_reserva;
+    private $user_id;
+
+    /**
+     * @return mixed
+     */
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param mixed $user_id
+     */
+    public function setUserId($user_id)
+    {
+        $this->user_id = $user_id;
+    }
+
+
 
     /**
      * @return mixed
@@ -218,8 +237,8 @@ class reserva extends Conexion
             $numeracion = "RESERVA-" . $correlativo;
 
             $sql = "
-                    INSERT INTO reserva (code, estado, ofrece, total, cliente_dni, horario_id) 
-                    VALUES (:p_code, :p_estado, :p_ofrece, :p_total, :p_cliente_dni, :p_horario_id);
+                    INSERT INTO reserva (code, estado, ofrece, total, cliente_dni, horario_id,user_id) 
+                    VALUES (:p_code, :p_estado, :p_ofrece, :p_total, :p_cliente_dni, :p_horario_id, :p_user_id);
                         ";
             $sentencia = $this->dbLink->prepare($sql);
             $sentencia->bindParam(":p_code", $numeracion);
@@ -228,6 +247,7 @@ class reserva extends Conexion
             $sentencia->bindParam(":p_total", $this->total);
             $sentencia->bindParam(":p_cliente_dni", $this->cliente_dni);
             $sentencia->bindParam(":p_horario_id", $this->horario_id);
+            $sentencia->bindParam(":p_user_id", $this->user_id);
             $sentencia->execute();
             //SELECT int_id FROM intencion order by 1 desc limit 1
 
@@ -342,11 +362,11 @@ class reserva extends Conexion
                       c.cap_id as capilla_id,
                       c.cap_nombre,
                       (case
-                         when (tc.tc_tipo = 'I' and (select count(id) from reserva where horario_id = h.id) = 0) then 'Disponible'
+                         when (tc.tc_tipo = 'I' and (select count(id) from reserva where horario_id = h.id and estado != 'Anulado') = 0) then 'Disponible'
                          when tc.tc_tipo = 'C' then 'Disponible'
                          else 'No disponible'
                         end) as disponibilidad,
-                      coalesce((select count(id) from reserva where horario_id = h.id),0) as numero_reservas
+                      coalesce((select count(id) from reserva where horario_id = h.id and estado != 'Anulado'),0) as numero_reservas
                 from
                 horario h inner join capilla c on h.capilla_id = c.cap_id
                   inner join parroquia p on c.par_id = p.par_id

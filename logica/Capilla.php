@@ -170,7 +170,7 @@ class Capilla extends Conexion
 
         try {
             if($rol == 3 or $rol == '3'){
-                $sql="select c.cap_id,c.cap_nombre, c.cap_direccion
+                $sql="select c.cap_id,c.cap_nombre, c.cap_direccion, c.parroquia as is_parroquia
                     from capilla c  inner join parroquia p on c.par_id = p.par_id
                     where c.cap_estado = true
                ";
@@ -178,7 +178,7 @@ class Capilla extends Conexion
                 $sentencia->execute();
                 $resultado = $sentencia->fetchAll(PDO::FETCH_ASSOC);
             }else{
-                $sql="select c.cap_id,c.cap_nombre, c.cap_direccion
+                $sql="select c.cap_id,c.cap_nombre, c.cap_direccion, c.parroquia as is_parroquia
                     from capilla c  inner join parroquia p on c.par_id = p.par_id
                     where p.par_id = :p_parroquia_id
                     and c.cap_estado = true

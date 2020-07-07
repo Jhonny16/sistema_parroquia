@@ -70,7 +70,8 @@ class Help
                         <meta http-equiv="X-UA-Compatible" content="IE=edge">   
                         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">       
                     </head>
-                    <body>
+                    <body style="margin-top: 0.3em;
+            margin-left: 0.6em;">
                   ';
         $html .= $htmlDatos;
         $html .= '</body>';
@@ -79,7 +80,7 @@ class Help
         return $html;
     }
 
-    public static function generarReporte($html_reporte, $tipo_reporte, $nombre_archivo)
+    public static function generarReporte($html_reporte, $tipo_reporte, $nombre_archivo,$horientacion)
     {
         if ($tipo_reporte == 1) {
             //Genera el reporte en HTML
@@ -87,7 +88,7 @@ class Help
         } else if ($tipo_reporte == 2) {
             //Genera el reporte en PDF
             $archivo_pdf = "../reportes/" . $nombre_archivo . ".pdf";
-            Help::generaPDF($archivo_pdf, $html_reporte);
+            Help::generaPDF($archivo_pdf, $html_reporte, $horientacion);
             header('Content-type: text/html; charset=UTF-8');
 //            header('Content-Type: application/pdf; charset=utf-8');
             header("location:" . $archivo_pdf);
@@ -125,7 +126,7 @@ class Help
         }
     }
 
-    public static function generaPDF($file = '', $html = '', $paper = 'a4', $download = true)
+    public static function generaPDF($file = '', $html = '', $horientacion,$paper = 'a4', $download = true)
     {
         require_once '../dompdf/autoload.inc.php';
         require_once '../dompdf/lib/html5lib/Parser.php';
@@ -139,7 +140,14 @@ class Help
         $dompdf->loadHtml(utf8_decode($html));
         $dompdf->set_option('isHtml5ParserEnabled', true);
 // (Optional) Setup the paper size and orientation
-        $dompdf->setPaper('A4', 'landscape');
+
+        if($horientacion == 'vertical'){
+            $dompdf->setPaper('A4', 'portrait');
+
+        }else{
+            $dompdf->setPaper('A4', 'landscape');
+
+        }
 
 // Render the HTML as PDF
         $dompdf->render();
@@ -147,6 +155,8 @@ class Help
 // Output the generated PDF to Browser
         $dompdf->stream($file);
     }
+
+
 
 
 }
