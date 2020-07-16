@@ -215,10 +215,10 @@ function lista() {
                     }
                     if (parseInt(item.numero_reservas) > 0){
                         html += '<td>';
-                        html += '<form id="form_horario" action="../controlador/reporte_misa_por_hora.php" method="post" target="_blank">';
+                        html += '<form id="form_horario'+ item.id +'" action="../controlador/reporte_misa_por_hora.php" method="post" target="_blank">';
                         html += '<input style="display: none" name="horario_id" value="' + item.id + '">';
                         html += '<input style="display: none" name="user_name" value="' + $("#sesion_user_name").val() + '">';
-                        html += '<a href="javascript:void();" onclick="document.getElementById(\'form_horario\').submit()">' +
+                        html += '<a href="javascript:void();" onclick="document.getElementById(\'form_horario'+ item.id +'\').submit()">' +
                             '<i class="fa fa-file-pdf-o text-danger"></i></a>';
                         html += '</form>';
                         html += '</td>';

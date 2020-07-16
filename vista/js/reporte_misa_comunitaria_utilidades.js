@@ -141,8 +141,6 @@ function listado(){
     var data = {
         'fecha_inicial': $("#busqueda_fecha_inicial").val(),
         'fecha_final': $("#busqueda_fecha_final").val(),
-        'hora_inicial': $("#busqueda_hora_inicial").val(),
-        'hora_final': $("#busqueda_hora_final").val(),
         'capilla_id': $("#busqueda_capilla_id").val(),
         'tipo_culto': 'C',
         'tipoculto_id': $("#busqueda_tipo_culto_id").val(),
@@ -188,8 +186,8 @@ function listado(){
                     html += '<td>' + item.hora_hora + '</td>';
                     html += '<td>' + item.dirigido + '</td>';
                     html += '<td>' + item.tipoculto_detalle + '</td>';
-                    html += '<td>' + item.reserva + '</td>';
-                    html += '<td>' + item.pago + '</td>';
+                    html += '<td>' + item.code_reserva + '</td>';
+                    html += '<td>' + item.code_pago + '</td>';
                     suma = suma + parseFloat(item.importe);
                     html += '<td>' + item.estado + '</td>';
                     html += '<td style="text-align: right">s/. ' + item.importe + '</td>';

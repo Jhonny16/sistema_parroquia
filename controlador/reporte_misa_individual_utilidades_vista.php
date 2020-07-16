@@ -11,8 +11,6 @@ require_once '../util/funciones/Funciones.php';
 try {
     $fecha_inicial =$_POST['fecha_inicial'];
     $fecha_final =$_POST['fecha_final'];
-    $hora_inicial =$_POST['hora_inicial'];
-    $hora_final =$_POST['hora_final'];
     $capilla_id =$_POST['capilla_id'];
     $tipoculto_id =$_POST['tipoculto_id'];
     $tipo_culto =$_POST['tipo_culto'];
@@ -20,7 +18,7 @@ try {
     $estado =$_POST['estado'];
     $obj = new Reportes();
 
-    $resultado = $obj->find_misa_invidual($fecha_inicial,$fecha_final,$hora_inicial,$hora_final,$capilla_id,$tipoculto_id,$tipo_culto,$dni,$estado);
+    $resultado = $obj->find_misa_invidual($fecha_inicial,$fecha_final,$capilla_id,$tipoculto_id,$tipo_culto,$dni,$estado);
     if($resultado){
         Funciones::imprimeJSON(200, "", $resultado);
     }else{

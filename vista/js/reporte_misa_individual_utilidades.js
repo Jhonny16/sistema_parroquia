@@ -141,8 +141,6 @@ function listado(){
     var data = {
         'fecha_inicial': $("#busqueda_fecha_inicial").val(),
         'fecha_final': $("#busqueda_fecha_final").val(),
-        'hora_inicial': $("#busqueda_hora_inicial").val(),
-        'hora_final': $("#busqueda_hora_final").val(),
         'capilla_id': $("#busqueda_capilla_id").val(),
         'tipo_culto': 'I',
         'tipoculto_id': $("#busqueda_tipoculto_id").val(),
@@ -168,7 +166,7 @@ function listado(){
                     '<thead>' +
                     '<tr style="background-color: #01a189; color: white">' +
                     '<th  style="text-align: center; color: #00c0ef">#.</th>' +
-                    '<th>Horario</th>' +
+                    '<th>Fecha</th>' +
                     '<th>Reserva</th>' +
                     '<th>Cliente</th>' +
                     '<th>Pago</th>' +
@@ -183,7 +181,7 @@ function listado(){
                     html += '<tr>';
 
                     html += '<td>' + (i+1) + '</td>';
-                    html += '<td>' + item.horario + '</td>';
+                    html += '<td>' + item.fecha + '</td>';
                     html += '<td>' + item.reserva_code + '</td>';
                     html += '<td>' + item.cliente + '</td>';
                     html += '<td>' + item.pago_code + '</td>';

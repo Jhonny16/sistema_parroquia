@@ -43,7 +43,6 @@ $htmlDatos = '
               
             <tr style="color:#878787">
                 <td style="text-align: left;font-style: oblique">Tipo: Misa Comunitaria</td>    
-                <td style="text-align: left;font-style: oblique">Usuario : ' . $user_name. '</td>    
             </tr>
         </head>
    </table>

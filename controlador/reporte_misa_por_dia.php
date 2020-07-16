@@ -30,7 +30,6 @@ $htmlDatos = '
             </tr>
               
             <tr style="color:#878787">
-                <td style="text-align: left;font-style: oblique">Usuario : ' . $user_name. '</td>  
                 <td style="text-align: left;font-style: oblique">Fecha: ' . $fecha . '</td>   ';
 
 $htmlDatos .= '    
@@ -80,8 +79,8 @@ for ($i = 0; $i < count($array); $i++) {
         if($array[$i]['id'] == $result[$j]['id']){
 
             $htmlDatos .= '<tr style="color: #3a87ad; font-size: 14px">';
-            $htmlDatos .= '<td></td><td style="" colspan="2">' . $result[$i]["dirigido"] . '</td>';
-            $htmlDatos .= '<td style="" >' . $result[$i]["tipoculto_detalle"] . '</td>';
+            $htmlDatos .= '<td></td><td style="" colspan="2">' . $result[$j]["dirigido"] . '</td>';
+            $htmlDatos .= '<td style="" >' . $result[$j]["tipoculto_detalle"] . '</td>';
             $htmlDatos .= '</tr>';
         }
     }

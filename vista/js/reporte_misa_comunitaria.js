@@ -109,6 +109,7 @@ function cargarTipoCultoId(capilla_id) {
 function listado(){
 
 
+
     var data = {
         'fecha_inicial': $("#busqueda_fecha_inicial").val(),
         'fecha_final': $("#busqueda_fecha_final").val(),
@@ -129,7 +130,6 @@ function listado(){
             console.log(resultado);
             var datosJSON = resultado;
             if (datosJSON.estado === 200) {
-                list_horarios_reservas = resultado.datos;
                 $("#lista_misas_comunitarias").html("");
 
                 var html = "";
@@ -150,7 +150,6 @@ function listado(){
                     '<tbody>';
                 $.each(datosJSON.datos, function (i, item) {
                     html += '<tr>';
-
                     html += '<td>' + (i+1) + '</td>';
                     html += '<td>' + item.fecha + '</td>';
                     html += '<td>' + item.hora_hora + '</td>';
@@ -167,7 +166,6 @@ function listado(){
                 html += '</tbody>';
                 html += '</table>';
                 $("#lista_misas_comunitarias").html(html);
-
                 $('#table_lista_misas_comunitarias').dataTable({
                     "aaSorting": [[2, "asc"]],
                     "bScrollCollapse": true,
@@ -178,7 +176,7 @@ function listado(){
 
             } else {
                 $("#reserva_lista").empty();
-                swal("Nota",  "No hay resultados en la búsqueda.", "warning");
+                swal("Nota",  resultado.mensaje, "warning");
             }
 
         },

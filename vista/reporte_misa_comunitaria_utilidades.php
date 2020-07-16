@@ -33,7 +33,7 @@
                         <div class="box-body">
                             <form  method="post" target="_blank">
                                 <div class="row">
-                                    <div class="col-xs-12 col-md-12 col-lg-4">
+                                    <div class="col-xs-12 col-md-12 col-lg-5">
                                         <input type="text" style="display: none" id="user_id" name="user_name">
                                         <div class="form-group">
                                             <span style="color: #01a189">Seleccione rango de fechas: </span>
@@ -57,35 +57,13 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-xs-12 col-md-12 col-lg-3">
-                                        <div class="form-group">
-                                            <span style="color: #01a189">Seleccione Hora : </span>
-                                            <div class="input-group date">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-clock-o"></i>
-                                                </div>
-                                                <input type="time" class="form-control pull-right"
-                                                       id="busqueda_hora_inicial" name="busqueda_hora_inicial"
-                                                       value="00:00" min="00:00" max="12:00">
-                                                <div class="input-group-addon">
-                                                    -
-                                                </div>
-                                                <input type="time" class="form-control pull-right"
-                                                       id="busqueda_hora_final" name="busqueda_hora_final"
-                                                       value="23:59" min="12:01" max="23:59">
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <div class="col-xs-12 col-md-12 col-lg-4">
                                         <div class="form-group">
                                             <span style="color: #01a189">Seleccione capilla: </span>
-                                            <select id="busqueda_capilla_id" name="busqueda_capilla_id" class="form-control">
+                                            <select id="busqueda_capilla_id" name="busqueda_capilla_id" class="form-control left">
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
 
                                     <div class="col-xs-12 col-md-12 col-lg-3">
                                         <div class="form-group">
@@ -95,6 +73,10 @@
                                             </select>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
+
+
                                     <div class="col-xs-12 col-md-12 col-lg-3">
                                         <div class="form-group">
                                             <span style="color: #01a189">Seleccione secretario: </span>

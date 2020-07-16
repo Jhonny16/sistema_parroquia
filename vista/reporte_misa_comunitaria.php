@@ -59,20 +59,20 @@
                                     </div>
                                     <div class="col-xs-12 col-md-12 col-lg-3">
                                         <div class="form-group">
-                                            <span style="color: #01a189">Seleccione Hora : </span>
+                                            <span style="color: #01a189">Seleccione Hora (Formato 24 hrs): </span>
                                             <div class="input-group date">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-clock-o"></i>
                                                 </div>
                                                 <input type="time" class="form-control pull-right"
                                                        id="busqueda_hora_inicial" name="busqueda_hora_inicial"
-                                                       value="00:00" min="00:00" max="12:00">
+                                                       value="00:00" >
                                                 <div class="input-group-addon">
                                                     -
                                                 </div>
                                                 <input type="time" class="form-control pull-right"
                                                        id="busqueda_hora_final" name="busqueda_hora_final"
-                                                       value="23:59" min="12:01" max="23:59">
+                                                       value="23:59" >
                                             </div>
                                         </div>
                                     </div>

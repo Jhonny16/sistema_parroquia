@@ -25,14 +25,15 @@ $htmlDatos = '
             </tr>
             <tr style="color:#878787">
                 <td style="text-align: left;font-style: oblique">Horario: ' . $result[0]['horario'] . '</td>    
-                 <td style="text-align: left;font-style: oblique">Usuario : ' . $user_name. '</td>  
             </tr>
               
             <tr style="color:#878787">
                 <td style="text-align: left;font-style: oblique">Tipo: ' . $result[0]['tc_nombre']. '</td>   ';
 
     for($i=0;$i<count($result); $i++){
-        if ($result[$i]['tipoculto_type'] == 'Individual'){
+        $search_bodas = strpos($result[$i]['tipoculto_detalle'], 'BODAS');
+        $search_matrimonio = strpos($result[$i]['tc_nombre'], 'Matrimonio');
+        if ($search_bodas==true or $search_matrimonio== true){
             $htmlDatos .= '     <td style="text-align: left;font-style: oblique">Detalle : '  . $result[0]['tipoculto_detalle']. '</td>';
             break;
         }
@@ -55,11 +56,18 @@ $htmlDatos .= '
                                     <th>#</th>
                                     <th>Intención</th>         ';
                             for($i=0;$i<count($result); $i++){
-                                if ($result[$i]['tipoculto_type'] != 'Individual'){
+
+                                $search_bodas = strpos($result[$i]['tipoculto_detalle'], 'BODAS');
+                                $search_matrimonio = strpos($result[$i]['tc_nombre'], 'Matrimonio');
+
+                                if ($search_bodas==false && $search_matrimonio== false){
                                     $htmlDatos .= '     
                                     <th>Detalle</th> ';
                                     break;
                                 }
+                                /*if ($result[$i]['tipoculto_type'] != 'Individual'){
+
+                                }*/
 }
                                $htmlDatos .=  ' </tr>                                
                             </head>
@@ -70,10 +78,21 @@ for ($i = 0; $i < count($result); $i++) {
     $htmlDatos .= '<tr style="color: #3a87ad">';
     $htmlDatos .= '<td style=" border: 0.2px solid #dcd9de;">' . ($i + 1) . '</td>';
     $htmlDatos .= '<td style=" border: 0.2px solid #dcd9de;">' . $result[$i]["dirigido"] . '</td>';
-    if ($result[$i]['tipoculto_type'] != 'Individual'){
-        $htmlDatos .= '<td style=" border: 0.2px solid #dcd9de;">' . $result[$i]["tipoculto_detalle"] . '</td>';
 
+
+    $search_bodas = strpos($result[$i]['tipoculto_detalle'], 'BODAS');
+    $search_matrimonio = strpos($result[$i]['tc_nombre'], 'Matrimonio');
+
+    //$htmlDatos .= '<td style=" border: 0.2px solid #dcd9de;">' . $search_matrimonio . '</td>';
+
+    if ($search_bodas==false && $search_matrimonio== false){
+        $htmlDatos .= '<td style=" border: 0.2px solid #dcd9de;">' . $result[$i]["tipoculto_detalle"] . '</td>';
     }
+
+
+ /*   if ($result[$i]['tipoculto_type'] != 'Individual'){
+
+    }*/
 
     $htmlDatos .= '</tr>';
 }

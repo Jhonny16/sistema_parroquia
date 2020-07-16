@@ -18,6 +18,13 @@ try {
     $tipo_culto =$_POST['tipo_culto'];
     $obj = new Reportes();
 
+    $hora1 = strtotime( $hora_inicial );
+    $hora2 = strtotime( $hora_final );
+    if($hora1 > $hora2){
+        Funciones::imprimeJSON(203, "La hora inicial no debe ser mayor a la hora final", null);
+        exit();
+    }
+
     $resultado = $obj->find_misa($fecha_inicial,$fecha_final,$hora_inicial,$hora_final,$capilla_id,$tipo_culto,$tipoculto_id);
     if($resultado){
         Funciones::imprimeJSON(200, "", $resultado);
